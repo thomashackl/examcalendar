@@ -1,0 +1,51 @@
+/*
+ * Persistent headers for any element (CSS + jQuery)
+ * 
+ * original code taken from http://css-tricks.com/persistent-headers/
+ * modified by Alexander Findeis <findeis@fim.uni-passau.de>
+ */
+
+function UpdateTableHeaders() {
+	$(".persist-area").each(function() {
+	    var el             = $(this),
+	        offset         = el.offset(),
+	        scrollTop      = $(window).scrollTop(),
+	        floatingHeader = $(".floatingHeader", this),
+	        studipHeader   = $("#barBottomContainer")
+	        
+        scrollTop += studipHeader.height();
+
+	    if ((scrollTop > offset.top) && (scrollTop <= offset.top + el.height() - floatingHeader.height * 2)) {
+	    	floatingHeader.css({
+	    		"top": 30,//studipHeader.height(),
+	            "visibility": "visible"
+	        });
+	    } else if ((scrollTop < offset.top + el.height() - floatingHeader.height * 2) && (scrollTop <= offset.top + el.height())) {
+	    	floatingHeader.css({
+	    		"top": offset.top + el.height() - floatingHeader.height - scrollTop,
+	            "visibility": "visible"
+	        });
+	    } else {
+	        floatingHeader.css({
+	            "visibility": "hidden"
+	        });      
+	    };
+    });
+}
+
+// DOM Ready      
+$(function() {
+    var clonedHeaderRow;
+
+    $(".persist-area").each(function() {
+        clonedHeaderRow = $(".persist-header", this);
+        clonedHeaderRow
+            .before(clonedHeaderRow.clone())
+            .css("width", clonedHeaderRow.width())
+            .addClass("floatingHeader");
+    });
+
+    $(window)
+        .scroll(UpdateTableHeaders)
+        .trigger("scroll");
+});

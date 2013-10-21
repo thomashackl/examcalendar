@@ -1,0 +1,202 @@
+div.spaced {
+    margin-bottom: 20px;
+}
+
+div.headline {
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+div.subheadline {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+div.infotext {
+	margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+input.checkbox {
+    vertical-align: middle;
+}
+
+input.button {
+    border-width: 0px;
+}
+
+table.faculty_info {
+    border: 0px;
+    border-spacing: 0px 5px;
+}
+
+table.faculty_info td.colorbox {
+    width: 12pt;
+}
+
+table.faculty_info td.faculty {
+    padding-left: 5px;
+}
+
+table.exams {
+    border: 0px;
+    border-spacing: 0px 2px;
+}
+
+table.exams th {
+    background: transparent;
+    border-bottom: 1px solid #000000;
+}
+
+table.exams tr:nth-child(odd) {
+    background: transparent;
+}
+
+table.exams tr:nth-child(even) {
+    background: #dddddd;
+}
+
+table.exams td.colorbox {
+    width: 12pt;
+}
+
+table.exams td.date {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+table.exams td.title {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+table.exams td.type {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table.exams td.room {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+table.faculty_colors {
+    border: 0px;
+    border-spacing: 0px 2px;
+}
+
+table.faculty_colors th {
+    background: transparent;
+    border-bottom: 1px solid #000000;
+}
+
+table.faculty_colors tr:nth-child(odd) {
+    background: transparent;
+}
+
+table.faculty_colors tr:nth-child(even) {
+    background: #dddddd;
+}
+
+table.faculty_colors td.faculty {
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+table.faculty_colors td.color {
+
+}
+
+table.calendar {
+    border: 2px solid #000000;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+table.calendar caption {
+	margin-bottom: 10px;
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+table.calendar thead th {
+	border: 1px solid #000000;
+    border-bottom-width: 2px;
+    background: #c0c0c0;
+	text-align: center;
+	font-weight: bold;
+}
+
+table.calendar tbody td {
+	border: 1px solid #000000;
+	padding-left: 4px;
+	padding-right: 4px;
+	width: 120px;
+    vertical-align: top;
+}
+
+table.calendar .week {
+	border-right-width: 2px;
+	background: #c0c0c0;
+	width: 25px;
+	text-align: center;
+	font-weight: bold;
+}
+
+table.calendar tbody td {
+	height: 90px;
+}
+
+table.calendar td.other_month {
+	background: #ebebeb;
+}
+
+table.calendar div.day {
+    float: left;
+	left: 0px;
+	top: 0px;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #a0a0a0;
+}
+
+table.calendar div.exam {
+	margin-top: 10px;
+}
+
+table.calendar div.exam div.first-time {
+	margin-top: -5px;
+	margin-bottom: 5px;
+	width: 100%;
+	text-align: right; 
+	font-weight: bold;
+}
+
+table.calendar div.exam div.time {
+    width: 100%;
+    text-align: center; 
+    font-weight: bold;
+}
+
+table.calendar div.exam div.num div.colorbox {
+	float: left;
+    margin-top: 2pt;
+    margin-right: 2pt;
+    width: 8pt;
+    height: 8pt;
+    font-size: 0px;
+}
+
+table.calendar div.exam div.title {
+	
+}
+
+table.calendar div.exam div.type {
+	font-style: italic;
+}
+
+table.calendar div.exam div.room {
+    width: 100%;
+    font-size: 8pt;
+}
+

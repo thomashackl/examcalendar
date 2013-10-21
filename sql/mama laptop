@@ -1,0 +1,37 @@
+apt-get update
+apt-get upgrade
+apt-get install htop dialog
+
+vim /etc/issue (Rescue-Login: User "rescue", Passwort "rescue")
+chmod -x /etc/update-motd.d/*
+dpkg-reconfigure landscape-common
+
+chmod +w /etc/sudoers
+vim /etc/sudoers (NOPASSWD: ALL)
+chmod -w /etc/sudoers
+
+useradd -m -G sudo -s /bin/bash autobackup
+passwd -d autobackup
+passwd -l autobackup
+
+vim /etc/init/tty1.conf (-a autobackup)
+
+chmod +w /boot/grub/grub.cfg
+vim /boot/grub/grub.cfg (quiet noplymouth consoleblank=0)
+Einträge umschreiben für Windows
+chmod -w /boot/grub/grub.cfg
+
+chmod -x /etc/grub.d/*
+Proxy erstellen der meine Config kopiert
+
+/home/autobackup/auto* kopieren
+/home/autobackup/.bashrc kopieren
+
+
+
+ntfsclone -o FILE -f /dev/sda1
+backup-alt.img, backup-neu.img -> alt löschen, neu nach alt, neu speichern
+
+
+
+backup vom rescue-system machen!
