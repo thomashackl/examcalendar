@@ -46,8 +46,9 @@ class Pruefungskalender extends StudIPPlugin implements SystemPlugin {
             $navigation->addSubNavigation('settings', $navi_settings);
         }
 
-        // Stylesheet für den Prüfungskalender
+        // Stylesheets
         PageLayout::addStylesheet($this->getPluginURL() . '/assets/style.css');
+        PageLayout::addStylesheet($this->getPluginURL() . '/assets/calendar.css');
 
         // JS Color Picker für die Einstellungen
         if ($GLOBALS['perm']->have_perm('root')) {

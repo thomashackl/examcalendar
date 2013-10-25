@@ -32,12 +32,12 @@ class ShowController extends AuthenticatedController {
 
     public function output_action() {
         $semesterData = SemesterData::getInstance();
-        $selectedSemester = $semesterData->getSemesterData($_POST['sem_select']);
+        $selectedSemester = $semesterData->getSemesterData(Request::option('sem_select'));
         // übergib, falls vorhanden, die Semesterbeschreibung, ansonsten den Semesternamen
         $this->semester = empty($selectedSemester['description']) ? $selectedSemester['name'] : $selectedSemester['description'];
 
         $exams = new Exams();
-        $exams->querySQL($_POST['sem_select'], $_POST['sem_tree'], isset($_POST['only_own']), isset($_POST['deputies']));
+        $exams->querySQL(Request::option('sem_select'), Request::option('sem_tree'), Request::get('only_own') ? true : false, Request::get('only_own') ? true : false);
         $result = $exams->getExams();
 
         if (empty($result)) {
@@ -48,7 +48,7 @@ class ShowController extends AuthenticatedController {
             return;
         }
 
-        switch ($_POST['format']) {
+        switch (Request::option('format')) {
             case 'html_list':
                 $this->selected = $exams->getSelectedNum();
                 $this->exams = $result;
@@ -101,14 +101,17 @@ class ShowController extends AuthenticatedController {
         $faculties = array();
 
         // Fakultäts-IDs und Farbwerte zusammenfassen, ungültige Farbwerte mit 000000 ersetzen
-        for ($i = 0; $i < count($_POST['fac_id']); $i++) {
-            $color = preg_match('/[0-9A-Fa-f]{6}/', $_POST['color'][$i]) ? $_POST['color'][$i] : '000000';
-            $faculties[$_POST['fac_id'][$i]] = $color;
+        $fac_id_array = Request::optionArray('fac_id');
+        $color_array = Request::optionArray('color');
+
+        for ($i = 0; $i < count($fac_id_array); $i++) {
+            $color = preg_match('/[0-9A-Fa-f]{6}/', $color_array[$i]) ? $color_array[$i] : '000000';
+            $faculties[$fac_id_array[$i]] = $color;
         }
 
         $this->faculties = $faculties;
 
-        $exam_types = $_POST['exam_types'];
+        $exam_types = Request::getArray('exam_types');
 
         $settings = new Settings();
         $settings->updateSQL($faculties, $exam_types);
