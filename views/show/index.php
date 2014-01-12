@@ -1,11 +1,12 @@
 <?php
+// Output-Action kann hierher umleiten
+Navigation::getItem('/calendar/pruefungskalender/output')->setActive(false);
 Navigation::activateItem('/calendar/pruefungskalender/index');
 
-$semesterData = SemesterData::getInstance();
-$currentSemester = $semesterData->getCurrentSemesterData();
-
-$onlyOwnPreset = $GLOBALS['perm']->have_perm('admin') ? '' : ' checked="checked"';
+$formats = ExamUtil::get_formats();
+$onlyOwnPreset = $only_own ? ' checked="checked"' : '';
 $dozentPerms = $GLOBALS['perm']->have_perm('dozent');
+$deputiesPreset = $deputies ? ' checked="checked"' : '';
 ?>
 
 <?php if ($format_error): ?>
@@ -23,18 +24,22 @@ $dozentPerms = $GLOBALS['perm']->have_perm('dozent');
 
     <div>
         <?= _('Semester wählen:') ?><br />
-        <?= $semesterData->GetSemesterSelector(null, $currentSemester['semester_id'], 'semester_id', false) ?>
+        <?= SemesterData::getInstance()->GetSemesterSelector(null, $sem_select, 'semester_id', false) ?>
     </div>
     <br />
 
     <div>
-        <input class="checkbox" type="checkbox" name="only_own"<?= $onlyOwnPreset ?>/>
-        <?= _('nur meine eigenen Veranstaltungen') ?>
+        <label>
+            <input class="checkbox" type="checkbox" name="only_own"<?= $onlyOwnPreset ?>/>
+            <?= _('nur meine eigenen Veranstaltungen') ?>
+        </label>
         <?php if ($dozentPerms): ?>
             <br />
 
-            <input class="checkbox" type="checkbox" name="deputies"/>
-            <?= _('Veranstaltungen, in denen ich Dozierendenvertretung bin') ?>
+            <label>
+                <input class="checkbox" type="checkbox" name="deputies"<?= $deputiesPreset ?>/>
+                <?= _('Veranstaltungen, in denen ich Dozierendenvertretung bin') ?>
+            </label>
         <?php endif ?>
     </div>
     <br />
@@ -42,12 +47,12 @@ $dozentPerms = $GLOBALS['perm']->have_perm('dozent');
     <div>
         <?= _('auf Fakultät oder Studiengang eingrenzen:') ?><br />
         <select name="sem_tree" size="10">
-            <option value="all" selected="selected">-- <?= _("alle") ?> --</option>
+            <option value="all" selected="selected"<?= $sem_tree == 'all' ? ' selected="selected"' : ''?>>-- <?= _("alle") ?> --</option>
             <?php foreach ($entries as $id => $name): ?>
                 <option value="<?= $id; ?>"><?= htmlReady($name) ?></option>
                 <?php if ($children[$id]): ?>
                     <?php foreach ($children[$id] as $cid => $cname): ?>
-                        <option value="<?= $cid ?>">&nbsp;&nbsp;&nbsp;<?= htmlReady($cname) ?></option>
+                        <option value="<?= $cid ?>"<?= $sem_tree == $cid ? ' selected="selected"' : ''?>>&nbsp;&nbsp;&nbsp;<?= htmlReady($cname) ?></option>
                     <?php endforeach ?>
                 <?php endif ?>
             <?php endforeach ?>
@@ -58,16 +63,14 @@ $dozentPerms = $GLOBALS['perm']->have_perm('dozent');
     <div>
         <?= _('Ausgabeformat wählen:') ?><br />
         <select name="format" size="1">
-            <option value="html_list">HTML (<?= _('Liste') ?>)</option>
-            <option value="html_calendar">HTML (<?= _('Kalender') ?>)</option>
-            <!-- <option value="pdf_list">PDF (<?= _('Liste') ?>)</option> -->
-            <!-- <option value="pdf_calendar">PDF (<?= _('Kalender') ?>)</option> -->
-            <option value="ical">iCal</option>
+            <?php foreach ($formats as $id => $name): ?>
+                <option value="<?= $id ?>"<?= $format == $id ? ' selected="selected"' : ''?>><?= $name ?></option>
+            <?php endforeach ?>
         </select>
     </div>
     <br />
 
-    <input class="button" type="image" name="submit" <?= makeButton('ausgeben', 'src') ?>/>
+    <?= Studip\Button::create(_('ausgeben')) ?>
 </form>
 
 <?php

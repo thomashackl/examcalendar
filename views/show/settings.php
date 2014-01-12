@@ -1,4 +1,5 @@
 <?php
+// Update-Action leitet hierher um, daher funktioniert AutoNavigation nicht
 Navigation::activateItem('/calendar/pruefungskalender/settings');
 ?>
 
@@ -60,7 +61,7 @@ Navigation::activateItem('/calendar/pruefungskalender/settings');
     </div>
     <br />
 
-    <input class="button" type="image" name="submit" <?= makeButton('speichern', 'src') ?>/>
+    <?= Studip\Button::createAccept(_('speichern')) ?>
 </form>
 
 <?php

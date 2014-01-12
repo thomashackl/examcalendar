@@ -51,17 +51,17 @@ class Exams {
 
         $inputs = array('semester_id' => $semester_id);
 
-        if ($studyCourse != 'all') {
-            $semTree = TreeAbstract::GetInstance("StudipSemTree", array("visible_only" => true));
-            $semTree->init();
-            $selectedEntries = $semTree->getKidsKids($studyCourse);
-            $selectedEntries[] = $studyCourse;
+//         if ($studyCourse != 'all') {
+//             $semTree = TreeAbstract::GetInstance("StudipSemTree", array("visible_only" => true));
+//             $semTree->init();
+//             $selectedEntries = $semTree->getKidsKids($studyCourse);
+//             $selectedEntries[] = $studyCourse;
 
-            $from .= " JOIN seminar_sem_tree sst ON (s.Seminar_id = sst.seminar_id)";
-            $where .= " AND sst.sem_tree_id IN (:selected_entries)";
+//             $from .= " JOIN seminar_sem_tree sst ON (s.Seminar_id = sst.seminar_id)";
+//             $where .= " AND sst.sem_tree_id IN (:selected_entries)";
 
-            $inputs['selected_entries'] = $selectedEntries;
-        }
+//             $inputs['selected_entries'] = $selectedEntries;
+//         }
 
         if ($onlyOwn) {
             $from .= " JOIN seminar_user su ON su.Seminar_id = s.Seminar_id";

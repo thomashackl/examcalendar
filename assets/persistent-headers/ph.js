@@ -10,24 +10,24 @@ function UpdateTableHeaders() {
 	    var el             = $(this),
 	        offset         = el.offset(),
 	        scrollTop      = $(window).scrollTop(),
-	        floatingHeader = $(".floatingHeader", this),
+	        floatingHeader = $(".persist-header", this),
 	        studipHeader   = $("#barBottomContainer")
 	        
         scrollTop += studipHeader.height();
 
-	    if ((scrollTop > offset.top) && (scrollTop <= offset.top + el.height() - floatingHeader.height * 2)) {
+	    if ((scrollTop > offset.top) ){//}&& (scrollTop <= offset.top + el.height() - floatingHeader.height * 2)) {
 	    	floatingHeader.css({
-	    		"top": 30,//studipHeader.height(),
-	            "visibility": "visible"
+	    		"top": studipHeader.height(),
+	            "position": "fixed"
 	        });
-	    } else if ((scrollTop < offset.top + el.height() - floatingHeader.height * 2) && (scrollTop <= offset.top + el.height())) {
-	    	floatingHeader.css({
-	    		"top": offset.top + el.height() - floatingHeader.height - scrollTop,
-	            "visibility": "visible"
-	        });
+//	    } else if ((scrollTop < offset.top + el.height() - floatingHeader.height * 2) && (scrollTop <= offset.top + el.height())) {
+//	    	floatingHeader.css({
+//	    		"top": offset.top + el.height() - floatingHeader.height - scrollTop,
+//	            "position": "fixed"
+//	        });
 	    } else {
 	        floatingHeader.css({
-	            "visibility": "hidden"
+	            "position": "relative"
 	        });      
 	    };
     });
@@ -37,13 +37,13 @@ function UpdateTableHeaders() {
 $(function() {
     var clonedHeaderRow;
 
-    $(".persist-area").each(function() {
-        clonedHeaderRow = $(".persist-header", this);
-        clonedHeaderRow
-            .before(clonedHeaderRow.clone())
-            .css("width", clonedHeaderRow.width())
-            .addClass("floatingHeader");
-    });
+//    $(".persist-area").each(function() {
+//        clonedHeaderRow = $(".persist-header", this);
+//        clonedHeaderRow
+//            .before(clonedHeaderRow.clone())
+//            .css("width", clonedHeaderRow.width())
+//            .addClass("floatingHeader");
+//    });c
 
     $(window)
         .scroll(UpdateTableHeaders)

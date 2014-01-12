@@ -1,23 +1,9 @@
-<?php
-Navigation::activateItem('/calendar/pruefungskalender');
-
-require_once('lib/dates.inc.php');
-
-function nice_date($timestamp) {
-    return getWeekday(date("w", $timestamp)) . "., " . date("d.m.Y", $timestamp);
-}
-
-function nice_time($timestamp) {
-    return date("H:i", $timestamp);
-}
-?>
-
 <div>
-    <table class="default">
+    <table class="default persist-area">
         <caption>
             <?= sprintf(_('Prüfungskalender für das %s'), htmlReady($semester)) ?>
         </caption>
-        <thead>
+        <thead class="persist-header">
             <tr>
                 <th>
 
@@ -45,8 +31,8 @@ function nice_time($timestamp) {
 
                     </td>
                     <td>
-                        <?= nice_date($exam['begin']) ?><br />
-                        <?= nice_time($exam['begin']) ?> - <?= nice_time($exam['end']) ?>
+                        <?= ExamUtil::nice_date($exam['begin']) ?><br />
+                        <?= ExamUtil::nice_time($exam['begin']) ?> - <?= ExamUtil::nice_time($exam['end']) ?>
                     </td>
                     <td>
                         <?= htmlReady($exam['num']) ?> <?= htmlReady($exam['title']) ?>
@@ -66,26 +52,4 @@ function nice_time($timestamp) {
 </div>
 
 <?php
-// Fakultäten-Legende für Infobox
-$faculty_box = '<table>';
-
-foreach($faculties as $f) {
-    $faculty_box .= '        <tr>';
-    $faculty_box .= '            <td class="colorbox_info" style="background: #' . $f['color']. '">';
-    $faculty_box .= '            </td>';
-    $faculty_box .= '            <td>';
-    $faculty_box .=                  htmlReady($f['faculty']);
-    $faculty_box .= '            </td>';
-    $faculty_box .= '        </tr>';
-}
-
-$faculty_box .= '</table>';
-
-$infobox_content = array(
-    array ('kategorie' => 'Fakultäten:',
-           'eintrag'   => array (
-               array ('text' => $faculty_box)
-          )
-    )
-);
-$infobox = array('picture' => 'infobox/board2.jpg', 'content' => $infobox_content); // TODO Bild
+$infobox = ExamUtil::create_infobox($faculties, $controller->url_for('show/output'), $sem_select, $only_own, $deputies, $sem_tree, $format);

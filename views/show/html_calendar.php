@@ -1,44 +1,3 @@
-<?php
-Navigation::activateItem('/calendar/pruefungskalender');
-
-include_once('lib/dates.inc.php');
-
-function getMonth($month) {
-    switch($month) {
-        case 1:
-            return _('Januar');
-        case 2:
-            return _('Februar');
-        case 3:
-            return _('März');
-        case 4:
-            return _('April');
-        case 5:
-            return _('Mai');
-        case 6:
-            return _('Juni');
-        case 7:
-            return _('Juli');
-        case 8:
-            return _('August');
-        case 9:
-            return _('September');
-        case 10:
-            return _('Oktober');
-        case 11:
-            return _('November');
-        case 12:
-            return _('Dezember');
-        default:
-            return _('ungültiger Monat');
-    }
-}
-
-function nice_time($timestamp) {
-    return date("H:i", $timestamp);
-}
-?>
-
 <h2>
     <?= sprintf(_('Prüfungskalender für das %s'), htmlReady($semester)) ?>
 </h2>
@@ -48,7 +7,8 @@ function nice_time($timestamp) {
         <div class="spaced">
             <table class="calendar">
                 <caption>
-                    <?= getMonth($month) ?> <?= $year ?>
+                    <? // TODO: = strftime('%B', strtotime("01.$month.1990")) ?>
+                    <?= ExamUtil::getMonth($month) ?> <?= $year ?>
                 </caption>
                 <thead>
                     <tr>
@@ -131,7 +91,7 @@ function nice_time($timestamp) {
                             ?>
                                 <div class="exam">
                                     <div class="<?= $i == 1 ? 'first-': '' ?>time">
-                                        <?= nice_time($exam['begin']) ?> - <?= nice_time($exam['end']) ?>
+                                        <?= ExamUtil::nice_time($exam['begin']) ?> - <?= ExamUtil::nice_time($exam['end']) ?>
                                     </div>
 
                                     <div class="num">
@@ -183,26 +143,4 @@ function nice_time($timestamp) {
 <?php endforeach ?>
 
 <?php
-// Fakultäten-Legende für Infobox
-$faculty_box = '<table>';
-
-foreach($faculties as $f) {
-    $faculty_box .= '        <tr>';
-    $faculty_box .= '            <td class="colorbox_info" style="background: #' . $f['color']. '">';
-    $faculty_box .= '            </td>';
-    $faculty_box .= '            <td>';
-    $faculty_box .=                  htmlReady($f['faculty']);
-    $faculty_box .= '            </td>';
-    $faculty_box .= '        </tr>';
-}
-
-$faculty_box .= '</table>';
-
-$infobox_content = array(
-    array ('kategorie' => 'Fakultäten:',
-           'eintrag'   => array (
-               array ('text' => $faculty_box)
-          )
-    )
-);
-$infobox = array('picture' => 'infobox/board2.jpg', 'content' => $infobox_content); // TODO Bild
+$infobox = ExamUtil::create_infobox($faculties, $controller->url_for('show/output'), $sem_select, $only_own, $deputies, $sem_tree, $format);
