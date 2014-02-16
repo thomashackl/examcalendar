@@ -6,7 +6,7 @@ class ExamExport {
         $export = new exportDoc();
         $export->setTitle(_('Prüfungskalender'));
         $export->setSubtitle($semester);
-        $export->setFilename('Pruefungskalender_' . $semester);
+        $export->setFilename(_('Prüfungskalender') . ' ' . $semester);
 
         // TODO Fakultäten
         // Tabelle: Farbe | Fakultät
@@ -35,7 +35,7 @@ class ExamExport {
         }
         $ex_table->content = $ex_table_content;
 
-        if ($selected < 2) $ex_table->blacklist[] = 'Art';
+        if ($selected < 2) $ex_table->blacklist[] = _('Art');
 
         // Dokument ausgeben
         $export->export('PDF');

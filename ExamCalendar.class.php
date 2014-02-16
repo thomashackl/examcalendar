@@ -21,14 +21,14 @@ require 'bootstrap.php';
  * @version 0.2
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPL version 2
  */
-class Pruefungskalender extends StudIPPlugin implements SystemPlugin {
+class ExamCalendar extends StudIPPlugin implements SystemPlugin {
 
     public function __construct() {
         parent::__construct();
 
         $navigation = Navigation::getItem('/calendar'); // Hauptmenü "Planer"
-        $examcalendar_navi = new AutoNavigation(_('Prüfungskalender'), PluginEngine::getUrl('pruefungskalender/show/output'));
-        $navigation->addSubNavigation('pruefungskalender', $examcalendar_navi);
+        $examcalendar_navi = new AutoNavigation(_('Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
+        $navigation->addSubNavigation('examcalendar', $examcalendar_navi);
     }
 
     public function initialize () {
@@ -36,18 +36,16 @@ class Pruefungskalender extends StudIPPlugin implements SystemPlugin {
     }
 
     public function perform($unconsumed_path) {
-        if ($GLOBALS['perm']->have_perm('root')) { // TODO navi-hack
-
-        $navigation = Navigation::getItem('/calendar/pruefungskalender');
-        $navi_index = new AutoNavigation(_('Prüfungskalender'), PluginEngine::getUrl('pruefungskalender/show/output'));
+        $navigation = Navigation::getItem('/calendar/examcalendar');
+        $navi_index = new AutoNavigation(_('Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
         $navigation->addSubNavigation('output', $navi_index);
 
 //         $navi_index = new AutoNavigation(_('Erweitert'), PluginEngine::getUrl('pruefungskalender/show/index'));
 //         $navigation->addSubNavigation('index', $navi_index);
 
         // Einstellungen sieht nur root
-//         if ($GLOBALS['perm']->have_perm('root')) {
-            $navi_settings = new AutoNavigation(_('Einstellungen'), PluginEngine::getUrl('pruefungskalender/show/settings'));
+         if ($GLOBALS['perm']->have_perm('root')) {
+            $navi_settings = new AutoNavigation(_('Einstellungen'), PluginEngine::getUrl('examcalendar/show/settings'));
             $navigation->addSubNavigation('settings', $navi_settings);
         }
 

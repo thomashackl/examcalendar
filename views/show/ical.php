@@ -16,7 +16,7 @@ foreach ($exams as $exam) {
 
     // Termin-Typ hinzufügen, falls mehr als 1 Typ eine Prüfung darstellt
     if ($selected > 1) {
-        $title = $GLOBALS['TERMIN_TYP'][$exam['type']]['name'] . ": " . $title;
+        $title = $GLOBALS['TERMIN_TYP'][$exam['type']]['name'] . ': ' . $title;
     }
 
     $properties = array(

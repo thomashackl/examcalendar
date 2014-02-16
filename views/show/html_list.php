@@ -43,7 +43,7 @@
                         </td>
                     <?php endif ?>
                     <td>
-                        <?= empty($exam['alt_room']) ? htmlReady($exam['room']) : htmlReady($exam['alt_room']) ?>
+                        <?= htmlReady(empty($exam['alt_room']) ? $exam['room'] : $exam['alt_room']) ?>
                     </td>
                 </tr>
             <?php endforeach ?>

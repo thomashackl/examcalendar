@@ -1,10 +1,6 @@
-/* mittige Ausrichtung der Checkboxen und keine Rahmen um Buttons */
+/* mittige Ausrichtung der Checkboxen */
 input.checkbox {
     vertical-align: middle;
-}
-
-input.button {
-    border-width: 0px;
 }
 
 

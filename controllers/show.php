@@ -55,7 +55,7 @@ class ShowController extends AuthenticatedController {
         // übergib, falls vorhanden, die Semesterbeschreibung, ansonsten den Semesternamen
         $this->semester = empty($selectedSemester['description']) ? $selectedSemester['name'] : $selectedSemester['description'];
 
-        $exams = new Exams();
+        $exams = new ExamDB();
         $exams->querySQL($this->sem_select, $this->sem_tree, $this->only_own, $this->deputies);
         $result = $exams->getExams();
 
@@ -125,8 +125,6 @@ class ShowController extends AuthenticatedController {
     }
 
     public function update_action() {
-        $faculties = array();
-
         // Fakultäts-IDs und Farbwerte zusammenfassen, ungültige Farbwerte mit 000000 ersetzen
         $fac_id_array = Request::optionArray('fac_id');
         $color_array = Request::optionArray('color');

@@ -7,7 +7,7 @@
         <div class="spaced">
             <table class="calendar">
                 <caption>
-                    <? // TODO: = strftime('%B', strtotime("01.$month.1990")) ?>
+                    <? // TODO = strftime('%B', strtotime("01.$month.1990")) ?>
                     <?= ExamUtil::getMonth($month) ?> <?= $year ?>
                 </caption>
                 <thead>
@@ -42,24 +42,24 @@
                     <tr>
                         <?php
                         $ts = mktime(0, 0, 0, $month, 1, $year);
-                        $kw = date('W', $ts);
+                        $cw = date('W', $ts);
                         ?>
                         <td class="week">
-                            <?= $kw ?>
+                            <?= $cw ?>
                         </td>
                         <?php
                         $days_in_month = date('t', $ts);
                         for ($day = 1; $day <= $days_in_month; $day++) {
                             $ts = mktime(0, 0, 0, $month, $day, $year);
 
-                            $kw2 = date('W', $ts);
-                            if ($kw != $kw2) {
-                                $kw = $kw2;
+                            $cw2 = date('W', $ts);
+                            if ($cw != $cw2) {
+                                $cw = $cw2;
                         ?>
                                 </tr>
                                 <tr>
                                     <td class="week">
-                                        <?= $kw ?>
+                                        <?= $cw ?>
                                     </td>
                         <?php
                             }
@@ -110,7 +110,7 @@
                                     <?php endif ?>
 
                                     <div class="room">
-                                        <?= empty($exam['alt_room']) ? htmlReady($exam['room']) : htmlReady($exam['alt_room']) ?>
+                                        <?= htmlReady(empty($exam['alt_room']) ? $exam['room'] : $exam['alt_room']) ?>
                                     </div>
                                 </div>
                             <?php

@@ -1,10 +1,11 @@
 <?php
 
-class Exams {
+class ExamDB {
 
     private $selected;
     private $exams;
     private $ordering_done = false;
+    private $ordered;
     private $faculties_done = false;
     private $faculties;
 
@@ -95,32 +96,18 @@ class Exams {
     public function getOrderedExams() {
         if (!$this->ordering_done) {
             // Prüfungen nach Jahr, Monat und Tag sortieren
-            $ordered = array();
-
             foreach ($this->exams as $exam) {
                 $year  = date("Y", $exam['begin']);
                 $month = date("n", $exam['begin']);
                 $day   = date("j", $exam['begin']);
 
-//                 if (!array_key_exists($year, $ordered)) {
-//                     $ordered[$year] = array();
-//                 }
-
-//                 if (!array_key_exists($month, $ordered[$year])) {
-//                     $ordered[$year][$month] = array();
-//                 }
-
-//                 if (!array_key_exists($day, $ordered[$year][$month])) {
-//                     $ordered[$year][$month][$day] = array();
-//                 }
-
-                $ordered[$year][$month][$day][] = $exam;
+                $this->ordered[$year][$month][$day][] = $exam;
             }
 
             $this->ordering_done = true;
         }
 
-        return $ordered;
+        return $this->ordered;
     }
 
     public function getFaculties() {
@@ -129,7 +116,6 @@ class Exams {
             if (!empty($this->exams)) {
                 $db = DBManager::get();
 
-                $faculties = array();
                 foreach ($this->exams as $exam) {
                     $faculties[] = $exam['fac_id'];
                 }
@@ -146,7 +132,6 @@ class Exams {
 
                 $result = $preparation->fetchAll();
 
-                $this->faculties = array();
                 foreach ($result as $r) {
                     $this->faculties[$r['fac_id']] = array('faculty' => $r['faculty'], 'color' => empty($r['color']) ? '000000' : $r['color']);
                 }
