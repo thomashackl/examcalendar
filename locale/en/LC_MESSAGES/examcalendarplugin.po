@@ -1,0 +1,285 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-24 09:30+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: models/ExamExport.php:7 Pruefungskalender.class.php:30
+#: Pruefungskalender.class.php:42
+msgid "Prüfungskalender"
+msgstr ""
+
+#: models/ExamExport.php:19 views/show/html_list.php:12
+msgid "Datum"
+msgstr ""
+
+#: models/ExamExport.php:20 views/show/html_list.php:15
+msgid "Veranstaltung"
+msgstr ""
+
+#: models/ExamExport.php:21 views/show/html_list.php:19
+msgid "Art"
+msgstr ""
+
+#: models/ExamExport.php:22 views/show/html_list.php:23
+msgid "Raum"
+msgstr ""
+
+#: models/ExamUtil.php:9 models/ExamUtil.php:11
+msgid "Liste"
+msgstr ""
+
+#: models/ExamUtil.php:10
+msgid "Kalender"
+msgstr ""
+
+#: models/ExamUtil.php:20
+msgid "Januar"
+msgstr ""
+
+#: models/ExamUtil.php:22
+msgid "Februar"
+msgstr ""
+
+#: models/ExamUtil.php:24
+msgid "März"
+msgstr ""
+
+#: models/ExamUtil.php:26
+msgid "April"
+msgstr ""
+
+#: models/ExamUtil.php:28
+msgid "Mai"
+msgstr ""
+
+#: models/ExamUtil.php:30
+msgid "Juni"
+msgstr ""
+
+#: models/ExamUtil.php:32
+msgid "Juli"
+msgstr ""
+
+#: models/ExamUtil.php:34
+msgid "August"
+msgstr ""
+
+#: models/ExamUtil.php:36
+msgid "September"
+msgstr ""
+
+#: models/ExamUtil.php:38
+msgid "Oktober"
+msgstr ""
+
+#: models/ExamUtil.php:40
+msgid "November"
+msgstr ""
+
+#: models/ExamUtil.php:42
+msgid "Dezember"
+msgstr ""
+
+#: models/ExamUtil.php:44
+msgid "ungültiger Monat"
+msgstr ""
+
+#: models/ExamUtil.php:85
+msgid "Semester:"
+msgstr ""
+
+#: models/ExamUtil.php:93
+msgid "nur eigene Veranstaltungen"
+msgstr ""
+
+#: models/ExamUtil.php:101
+msgid "Dozierendenvertretung"
+msgstr ""
+
+#: models/ExamUtil.php:109
+msgid "Format:"
+msgstr ""
+
+#: models/ExamUtil.php:119
+msgid "aktualisieren"
+msgstr ""
+
+#: Pruefungskalender.class.php:50
+msgid "Einstellungen"
+msgstr ""
+
+#: views/show/error.php:9 views/show/index.php:13
+msgid "Das ausgewählte Ausgabeformat ist ungültig."
+msgstr ""
+
+#: views/show/error.php:13 views/show/index.php:17
+#, php-format
+msgid ""
+"Es wurden keine Prüfungen im %s gefunden, die den ausgewählten Kriterien "
+"entsprechen!"
+msgstr ""
+
+#: views/show/html_calendar.php:2 views/show/html_list.php:4
+#, php-format
+msgid "Prüfungskalender für das %s"
+msgstr ""
+
+#: views/show/html_calendar.php:16
+msgid "KW"
+msgstr ""
+
+#: views/show/html_calendar.php:19
+msgid "Mo"
+msgstr ""
+
+#: views/show/html_calendar.php:22
+msgid "Di"
+msgstr ""
+
+#: views/show/html_calendar.php:25
+msgid "Mi"
+msgstr ""
+
+#: views/show/html_calendar.php:28
+msgid "Do"
+msgstr ""
+
+#: views/show/html_calendar.php:31
+msgid "Fr"
+msgstr ""
+
+#: views/show/html_calendar.php:34
+msgid "Sa"
+msgstr ""
+
+#: views/show/html_calendar.php:37
+msgid "So"
+msgstr ""
+
+#: views/show/index.php:22
+msgid "Konfigurieren Sie hier Ihren Prüfungskalender"
+msgstr ""
+
+#: views/show/index.php:26
+msgid "Semester wählen:"
+msgstr ""
+
+#: views/show/index.php:34
+msgid "nur meine eigenen Veranstaltungen"
+msgstr ""
+
+#: views/show/index.php:41
+msgid "Veranstaltungen, in denen ich Dozierendenvertretung bin"
+msgstr ""
+
+#: views/show/index.php:48
+msgid "auf Fakultät oder Studiengang eingrenzen:"
+msgstr ""
+
+#: views/show/index.php:50
+msgid "alle"
+msgstr ""
+
+#: views/show/index.php:64
+msgid "Ausgabeformat wählen:"
+msgstr ""
+
+#: views/show/index.php:73
+msgid "ausgeben"
+msgstr ""
+
+#: views/show/index.php:81
+msgid ""
+"Hier können Sie sich einen Prüfungskalender für ein bestimmtes Semester "
+"generieren lassen."
+msgstr ""
+
+#: views/show/index.php:84
+msgid ""
+"Sie können entscheiden, ob Sie alle Prüfungen des gewählten Semesters "
+"angezeigt bekommen möchten, oder nur Prüfungen in Veranstaltungen, in denen "
+"Sie angemeldet sind."
+msgstr ""
+
+#: views/show/index.php:87
+msgid ""
+"Sie haben die Möglichkeit, nur Prüfungen einer bestimmten Fakultät oder "
+"eines einzelnen Studiengangs anzeigen zu lassen."
+msgstr ""
+
+#: views/show/index.php:90
+msgid ""
+"Die Ausgabe kann in verschiedenen Formaten erfolgen, z.B. als Liste oder "
+"Kalender, jeweils in HTML oder als PDF."
+msgstr ""
+
+#: views/show/settings.php:7
+msgid "Die Einstellungen wurden gespeichert."
+msgstr ""
+
+#: views/show/settings.php:12
+msgid "Globale Einstellungen für den Prüfungskalender"
+msgstr ""
+
+#: views/show/settings.php:17
+msgid "Folgende Termin-Typen sollen im Prüfungskalender dargestellt werden:"
+msgstr ""
+
+#: views/show/settings.php:31
+msgid "Ordnen Sie hier den Fakultäten einen Farbwert zu:"
+msgstr ""
+
+#: views/show/settings.php:35
+msgid ""
+"Farbwerte werden Hexadezimal angegeben, ohne das führende Raute-Zeichen."
+msgstr ""
+
+#: views/show/settings.php:36
+msgid ""
+"Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur Verfügung."
+msgstr ""
+
+#: views/show/settings.php:43
+msgid "Fakultät"
+msgstr ""
+
+#: views/show/settings.php:46
+msgid "Farbe"
+msgstr ""
+
+#: views/show/settings.php:64
+msgid "speichern"
+msgstr ""
+
+#: views/show/settings.php:72
+msgid ""
+"Wählen Sie die Termin-Typen aus, die bei der Erstellung eines "
+"Prüfungskalenders berücksichtigt werden sollen."
+msgstr ""
+
+#: views/show/settings.php:75
+msgid ""
+"Die Farben, die Sie den Fakultäten zuordnen, werden in den Listen- und "
+"Kalenderausgaben verwendet, um darzustellen, welche Prüfungen zu welchen "
+"Fakultäten gehören."
+msgstr ""
+
+#: views/show/settings.php:76
+msgid ""
+"Jede Ausgabe enthält eine Legende, die die Farbzuordnung der Fakultäten "
+"enthält."
+msgstr ""
