@@ -1,6 +1,6 @@
 <?php
 // Update-Action leitet hierher um, daher funktioniert AutoNavigation nicht
-Navigation::activateItem('/calendar/pruefungskalender/settings');
+Navigation::activateItem('/calendar/examcalendar/settings');
 ?>
 
 <?php if ($update_success): ?>
@@ -66,7 +66,7 @@ Navigation::activateItem('/calendar/pruefungskalender/settings');
 
 <?php
 $infobox_content = array(
-    array ('kategorie' => 'Information:',
+    array ('kategorie' => _('Information') . ':',
            'eintrag'   => array (
                 array ('icon' => 'icons/16/black/info.png',
                        'text' => _('Wählen Sie die Termin-Typen aus, die bei der Erstellung eines Prüfungskalenders berücksichtigt werden sollen.')

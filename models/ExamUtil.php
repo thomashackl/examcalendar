@@ -82,7 +82,7 @@ class ExamUtil {
 
         $settings_box .= '    <tr><td>';
         $settings_box .= '        <label>';
-        $settings_box .=              _('Semester:');
+        $settings_box .=              _('Semester') . ':';
         $settings_box .=              SemesterData::getInstance()->GetSemesterSelector(null, $sem_select, 'semester_id', false);
         $settings_box .= '        </label>';
         $settings_box .= '    </td></tr>';
@@ -106,7 +106,7 @@ class ExamUtil {
 
         $settings_box .= '    <tr><td>';
         $settings_box .= '        <label>';
-        $settings_box .=              _('Format:');
+        $settings_box .=              _('Format') . ':';
         $settings_box .= '            <select name="format" size="1">';
         foreach ($formats as $id => $name) {
             $settings_box .= '                <option value="' . $id .'"' . ($format == $id ? ' selected="selected"' : '') . '>' . $name . '</option>';
@@ -124,7 +124,7 @@ class ExamUtil {
 
         // Zusammensetzen des Inhalts
         $infobox_content = array(
-            array ('kategorie' => 'Einstellungen:',
+            array ('kategorie' => _('Einstellungen') . ':',
                    'eintrag'   => array (
                        array ('text' => $settings_box)
                   )
@@ -133,7 +133,7 @@ class ExamUtil {
 
         if (!empty($faculties)) {
             $infobox_content[] =
-            array ('kategorie' => 'Fakultäten:',
+            array ('kategorie' => _('Fakultäten') . ':',
                    'eintrag'   => array (
                        array ('text' => $faculty_box)
                   )

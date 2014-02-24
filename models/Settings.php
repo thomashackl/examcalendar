@@ -18,8 +18,6 @@ class Settings {
     }
 
     public static function bin_decode($input) {
-        $result = array();
-
         for ($i = 1; $i <= count($GLOBALS['TERMIN_TYP']); $i++) {
             if ($input & (1 << ($i - 1))) {
                 $result[] = $i;
