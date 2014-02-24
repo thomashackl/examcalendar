@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-24 09:30+0100\n"
-"PO-Revision-Date: 2014-02-24 09:50+0200\n"
-"Last-Translator: Thomas <thomas.hackl@uni-passau.de>\n"
+"PO-Revision-Date: 2014-02-24 10:03+0200\n"
+"Last-Translator: Hartmut Andrew <Andrew.Rink@uni-passau.de>\n"
 "Language-Team: English <http://develop.intelec.uni-"
 "passau.de/weblate/projects/studip/examcalendarplugin/en/>\n"
 "Language: en\n"
@@ -106,7 +106,7 @@ msgstr "Semester:"
 
 #: models/ExamUtil.php:93
 msgid "nur eigene Veranstaltungen"
-msgstr "only own courses"
+msgstr "only my own courses"
 
 #: models/ExamUtil.php:101
 msgid "Dozierendenvertretung"
