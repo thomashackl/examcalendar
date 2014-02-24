@@ -138,7 +138,7 @@ msgstr "No exams fulfilling the selected criteria were found in semester %s!"
 #: views/show/html_calendar.php:2 views/show/html_list.php:4
 #, php-format
 msgid "Prüfungskalender für das %s"
-msgstr "Exam calendar for the semester %s"
+msgstr "Exam calendar for semester %s"
 
 #: views/show/html_calendar.php:16
 msgid "KW"
