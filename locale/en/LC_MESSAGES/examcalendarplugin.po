@@ -186,7 +186,7 @@ msgstr "only my own courses"
 
 #: views/show/index.php:41
 msgid "Veranstaltungen, in denen ich Dozierendenvertretung bin"
-msgstr "Courses I am substitute in"
+msgstr "courses in which I substitute for someone else"
 
 #: views/show/index.php:48
 msgid "auf Fakultät oder Studiengang eingrenzen:"
