@@ -150,7 +150,7 @@ msgstr "Mon"
 
 #: views/show/html_calendar.php:22
 msgid "Di"
-msgstr "Tue"
+msgstr "Tues"
 
 #: views/show/html_calendar.php:25
 msgid "Mi"
