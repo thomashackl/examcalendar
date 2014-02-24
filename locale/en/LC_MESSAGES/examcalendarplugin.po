@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-02-24 09:30+0100\n"
-"PO-Revision-Date: 2014-02-24 10:05+0200\n"
+"PO-Revision-Date: 2014-02-24 10:06+0200\n"
 "Last-Translator: Hartmut Andrew <Andrew.Rink@uni-passau.de>\n"
 "Language-Team: English <http://develop.intelec.uni-"
 "passau.de/weblate/projects/studip/examcalendarplugin/en/>\n"
@@ -190,7 +190,7 @@ msgstr "courses in which I substitute for someone else"
 
 #: views/show/index.php:48
 msgid "auf Fakultät oder Studiengang eingrenzen:"
-msgstr "show only faculty or course of study:"
+msgstr "filter by faculty or degree programme:"
 
 #: views/show/index.php:50
 msgid "alle"
