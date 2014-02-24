@@ -208,7 +208,7 @@ msgstr "output"
 msgid ""
 "Hier können Sie sich einen Prüfungskalender für ein bestimmtes Semester "
 "generieren lassen."
-msgstr "You can have an exam calendar generated for a selected semester."
+msgstr "You can have an exam calendar generated for a selected semester here."
 
 #: views/show/index.php:84
 msgid ""
