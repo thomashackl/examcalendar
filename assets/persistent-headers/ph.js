@@ -43,7 +43,7 @@ $(function() {
 //            .before(clonedHeaderRow.clone())
 //            .css("width", clonedHeaderRow.width())
 //            .addClass("floatingHeader");
-//    });c
+//    });
 
     $(window)
         .scroll(UpdateTableHeaders)

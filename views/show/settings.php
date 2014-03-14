@@ -7,33 +7,40 @@ Navigation::activateItem('/calendar/examcalendar/settings');
     <?= MessageBox::success(_('Die Einstellungen wurden gespeichert.')) ?>
 <?php endif ?>
 
-<form action="<?= $controller->url_for('show/update') ?>" method="post">
+<form action="<?= $controller->url_for('show/update') ?>" method="post" class="studip_form">
     <h2>
         <?= _('Globale Einstellungen für den Prüfungskalender') ?>
     </h2>
 
-    <div>
-        <h4>
+    <fieldset>
+        <legend>
             <?= _('Folgende Termin-Typen sollen im Prüfungskalender dargestellt werden:') ?>
-        </h4>
+        </legend>
         <?php for ($i = 1; $i <= count($GLOBALS['TERMIN_TYP']); $i++): ?>
+<!--
             <label>
                 <input class="checkbox" type="checkbox" name="exam_types[]" value="<?= $i ?>"<?= in_array($i, $exam_types) ? ' checked="checked"' : '' ?>/>
                 <?= htmlReady($GLOBALS['TERMIN_TYP'][$i]['name']) ?>
             </label>
-            <br />
+-->
+            <input id="exam_type_<?= $i ?>" class="studip_checkbox" type="checkbox" name="exam_types[]" value="<?= $i ?>"<?= in_array($i, $exam_types) ? ' checked="checked"' : '' ?>/>
+            <label for="exam_type_<?= $i ?>">
+                <?= htmlReady($GLOBALS['TERMIN_TYP'][$i]['name']) ?>
+            </label>
         <?php endfor ?>
-    </div>
-    <br />
+    </fieldset>
 
-    <div>
-        <h4>
+    <fieldset>
+        <legend>
             <?= _('Ordnen Sie hier den Fakultäten einen Farbwert zu:') ?>
-        </h4>
+        </legend>
 
         <div>
-            <?= _('Farbwerte werden Hexadezimal angegeben, ohne das führende Raute-Zeichen.') ?><br />
-            <?= _('Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur Verfügung.') ?>
+            <?= _('Farbwerte werden Hexadezimal angegeben, ohne das führende Raute-Zeichen.') ?>
+            <noscript>
+                <br />
+                <?= _('Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur Verfügung.') ?>
+            </noscript>
         </div>
         <br />
 
@@ -58,10 +65,10 @@ Navigation::activateItem('/calendar/examcalendar/settings');
                 </tr>
             <?php endforeach ?>
         </table>
-    </div>
-    <br />
+    </fieldset>
 
-    <?= Studip\Button::createAccept(_('speichern')) ?>
+    <?= Studip\Button::createAccept() ?>
+    <button type="reset" class="cancel button" name="reset"><?= _('zurücksetzen') ?></button>
 </form>
 
 <?php
