@@ -18,7 +18,7 @@ require 'bootstrap.php';
  * version.
  *
  * @author  Alexander Findeis <findeis@fim.uni-passau.de>
- * @version 0.2
+ * @version 1.0
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPL version 2
  */
 class ExamCalendar extends StudIPPlugin implements SystemPlugin {
@@ -37,11 +37,8 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
 
     public function perform($unconsumed_path) {
         $navigation = Navigation::getItem('/calendar/examcalendar');
-        $navi_index = new AutoNavigation(_('Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
-        $navigation->addSubNavigation('output', $navi_index);
-
-//         $navi_index = new AutoNavigation(_('Erweitert'), PluginEngine::getUrl('pruefungskalender/show/index'));
-//         $navigation->addSubNavigation('index', $navi_index);
+        $navi_output = new AutoNavigation(_('Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
+        $navigation->addSubNavigation('output', $navi_output);
 
         // Einstellungen sieht nur root
          if ($GLOBALS['perm']->have_perm('root')) {
@@ -56,11 +53,8 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
         // JS Color Picker für die Einstellungen
         if ($GLOBALS['perm']->have_perm('root')) {
             PageLayout::addScript($this->getPluginURL() . '/assets/jscolor/jscolor.js');
+            PageLayout::addScript($this->getPluginURL() . '/assets/application.js');
         }
-
-        // Persistent Headers für lange Tabellenausgaben
-//         PageLayout::addStylesheet($this->getPluginURL() . '/assets/persistent-headers/style.css');
-//         PageLayout::addScript($this->getPluginURL() . '/assets/persistent-headers/ph.js');
 
 
 

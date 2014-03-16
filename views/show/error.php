@@ -1,10 +1,3 @@
-<?php
-$formats = ExamUtil::get_formats();
-$onlyOwnPreset = $only_own ? ' checked="checked"' : '';
-$dozentPerms = $GLOBALS['perm']->have_perm('dozent');
-$deputiesPreset = $deputies ? ' checked="checked"' : '';
-?>
-
 <?php if ($format_error): ?>
     <?= MessageBox::error(_('Das ausgewählte Ausgabeformat ist ungültig.')) ?>
 <?php endif ?>

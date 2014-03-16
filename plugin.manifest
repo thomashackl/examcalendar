@@ -1,7 +1,7 @@
 pluginname=Prüfungskalender
 pluginclassname=ExamCalendar
 origin=intelec
-version=0.2
+version=1.0
 description=Erstellt eine Übersicht über die Prüfungen eines Semesters in verschiedenen Ausgabeformaten 
 studipMinVersion=2.4
 dbscheme=sql/install.sql

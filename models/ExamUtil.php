@@ -4,12 +4,16 @@ require_once('lib/dates.inc.php');
 
 class ExamUtil {
 
-    public static function get_formats() {
+    public static function get_display_formats() {
         return array(
-            'html_list'     => 'HTML (' . _('Liste') . ')',
-            'html_calendar' => 'HTML (' . _('Kalender') . ')',
+            'html_list'     => _('Liste'),
+            'html_calendar' => _('Kalender')
+        );
+    }
+
+    public static function get_export_formats() {
+        return array(
             'pdf_list'      => 'PDF (' . _('Liste') . ')',
-//             'pdf_calendar'  => 'PDF (' . _('Kalender') . ')',
             'ical'          => 'iCal'
         );
     }
@@ -70,57 +74,77 @@ class ExamUtil {
         $faculty_box .= '</table>';
 
         // Einstellungen für den Prüfungskalender
-        $settings_box = '<form action="' . $url . '" method="post">';
-//         $settings_box .= '<input type="hidden" name="sem_tree" value="' . $sem_tree . '" />';
+        $settings_box  = '<form action="' . $url . '" method="post">';
 
-        $settings_box .= '<table>';
-
-        $formats = ExamUtil::get_formats();
+        $display_formats = ExamUtil::get_display_formats();
         $onlyOwnPreset = $only_own ? ' checked="checked"' : '';
         $dozentPerms = $GLOBALS['perm']->have_perm('dozent');
         $deputiesPreset = $deputies ? ' checked="checked"' : '';
 
-        $settings_box .= '    <tr><td>';
-        $settings_box .= '        <label>';
-        $settings_box .=              _('Semester') . ':';
-        $settings_box .=              SemesterData::getInstance()->GetSemesterSelector(null, $sem_select, 'semester_id', false);
-        $settings_box .= '        </label>';
-        $settings_box .= '    </td></tr>';
+        $settings_box .= '    <label>';
+        $settings_box .=          _('Semester') . ':';
+        $settings_box .=          SemesterData::getInstance()->GetSemesterSelector(array('onchange' => 'this.form.submit();'), $sem_select, 'semester_id', false);
+        $settings_box .= '    </label>';
+        $settings_box .= '    <br />';
+        $settings_box .= '    <br />';
 
-        $settings_box .= '    <tr><td>';
-        $settings_box .= '        <label>';
-        $settings_box .= '            <input class="checkbox" type="checkbox" name="only_own"' . $onlyOwnPreset . '/>';
-        $settings_box .=              _('nur eigene Veranstaltungen');
-        $settings_box .= '        </label>';
-
+        $settings_box .= '    <label>';
+        $settings_box .= '        <input class="checkbox" type="checkbox" name="only_own"' . $onlyOwnPreset . ' onchange="this.form.submit();" />';
+        $settings_box .=          _('nur eigene Veranstaltungen');
+        $settings_box .= '    </label>';
         if ($dozentPerms) {
-            $settings_box .= '        <br />';
+            $settings_box .= '    <br />';
 
-            $settings_box .= '        <label>';
-            $settings_box .= '            <input class="checkbox" type="checkbox" name="deputies"' . $deputiesPreset . '/>';
-            $settings_box .=              _('Dozierendenvertretung');
-            $settings_box .= '        </label>';
+            $settings_box .= '    <label>';
+            $settings_box .= '        <input class="checkbox" type="checkbox" name="deputies"' . $deputiesPreset . ' onchange="this.form.submit();" />';
+            $settings_box .=          _('Dozierendenvertretung');
+            $settings_box .= '    </label>';
         }
+        $settings_box .= '    <br />';
+        $settings_box .= '    <br />';
 
-        $settings_box .= '    </td></tr>';
-
-        $settings_box .= '    <tr><td>';
-        $settings_box .= '        <label>';
-        $settings_box .=              _('Format') . ':';
-        $settings_box .= '            <select name="format" size="1">';
-        foreach ($formats as $id => $name) {
-            $settings_box .= '                <option value="' . $id .'"' . ($format == $id ? ' selected="selected"' : '') . '>' . $name . '</option>';
+        $settings_box .= '    <label>';
+        $settings_box .=          _('Anzeigeformat') . ':';
+        $settings_box .= '        <select name="format" size="1" onchange="this.form.submit();">';
+        foreach ($display_formats as $id => $name) {
+            $settings_box .= '            <option value="' . $id .'"' . ($format == $id ? ' selected="selected"' : '') . '>' . $name . '</option>';
         }
-        $settings_box .= '            </select>';
-        $settings_box .= '        </label>';
-        $settings_box .= '    </td></tr>';
+        $settings_box .= '        </select>';
+        $settings_box .= '    </label>';
 
-        $settings_box .= '    <tr><td>';
+        $settings_box .= '    <noscript>';
+        $settings_box .= '        <br />';
+        $settings_box .= '        <br />';
         $settings_box .=          Studip\Button::create(_('aktualisieren'));
-        $settings_box .= '    </td></tr>';
+        $settings_box .= '    </noscript>';
 
-        $settings_box .= '</table>';
+        $settings_box .= '    <br />';
+        $settings_box .= '    <br />';
         $settings_box .= '</form>';
+
+        // Export
+        $export_box  = '<form action="' . $url . '" method="post">';
+
+        $export_formats = ExamUtil::get_export_formats();
+
+        $export_box .= '    <input type="hidden" name="sem_select" value="' . $sem_select . '" />';
+        $export_box .= '    <input type="hidden" name="only_own" value="' . $only_own . '" />';
+        $export_box .= '    <input type="hidden" name="deputies" value="' . $deputies . '" />';
+
+        $export_box .= '    <label>';
+        $export_box .=          _('Ausgabeformat') . ':';
+        $export_box .= '        <select name="format" size="1">';
+        foreach ($export_formats as $id => $name) {
+            $export_box .= '            <option value="' . $id .'">' . $name . '</option>';
+        }
+        $export_box .= '        </select>';
+        $export_box .= '    </label>';
+        $export_box .= '    <br />';
+
+        $export_box .=      Studip\Button::create(_('exportieren'));
+        $export_box .= '    <br />';
+        $export_box .= '    <br />';
+        $export_box .= '</form>';
 
         // Zusammensetzen des Inhalts
         $infobox_content = array(
@@ -128,10 +152,18 @@ class ExamUtil {
                    'eintrag'   => array (
                        array ('text' => $settings_box)
                   )
-            )
+            ),
         );
 
         if (!empty($faculties)) {
+            // zeige Export nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)
+            $infobox_content[] =
+            array ('kategorie' => _('Exportieren') . ':',
+                   'eintrag'   => array (
+                       array ('text' => $export_box)
+                  )
+            );
+
             $infobox_content[] =
             array ('kategorie' => _('Fakultäten') . ':',
                    'eintrag'   => array (

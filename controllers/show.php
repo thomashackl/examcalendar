@@ -4,7 +4,7 @@ class ShowController extends AuthenticatedController {
 
     public function before_filter(&$action, &$args) {
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
-//        PageLayout::setTitle('');
+        $this->set_content_type('text/html; charset=windows-1252');
     }
 
     private function saveRequestParams() {
@@ -23,31 +23,6 @@ class ShowController extends AuthenticatedController {
         }
     }
 
-//     public function index_action() {
-//         $this->saveRequestParams();
-
-//         // Studienbereiche auslesen
-//         $semTree = TreeAbstract::GetInstance("StudipSemTree", array('visible_only' => true));
-//         $semTree->init();
-
-//         $entries = array();
-//         $children = array();
-//         foreach ($semTree->getKids('root') as $child) {
-//             $entries[$child] = htmlReady($semTree->tree_data[$child]['name']);
-//             if ($semTree->hasKids($child)) {
-//                 $children[$child] = array();
-//                 foreach ($semTree->getKids($child) as $grandchild) {
-//                     $children[$child][$grandchild] = htmlReady($semTree->tree_data[$grandchild]['name']);
-//                 }
-//                 asort($children[$child]);
-//             }
-//         }
-//         asort($entries);
-
-//         $this->entries = $entries;
-//         $this->children = $children;
-//     }
-
     public function output_action() {
         $this->saveRequestParams();
 
@@ -61,10 +36,6 @@ class ShowController extends AuthenticatedController {
 
         if (empty($result)) {
             $this->no_results = true;
-
-            // auf Indexseite umleiten
-//             $this->index_action();
-//             $this->render_action('index');
             $this->render_action('error');
 
             return;
@@ -93,14 +64,7 @@ class ShowController extends AuthenticatedController {
                 $this->render_nothing();
                 break;
 
-//             case 'pdf_calendar':
-//                 ExamExport::exportPDFcalendar($this->semester, $exams->getSelectedNum(), $result, $exams->getFaculties());
-
-//                 $this->render_nothing();
-//                 break;
-
             case 'ical':
-                // kein Output, nur Download
                 $this->selected = $exams->getSelectedNum();
                 $this->exams = $result;
 
@@ -109,10 +73,6 @@ class ShowController extends AuthenticatedController {
 
             default:
                 $this->format_error = true;
-
-                // auf Indexseite umleiten
-//                 $this->index_action();
-//                 $this->render_action('index');
                 $this->render_action('error');
         }
     }
