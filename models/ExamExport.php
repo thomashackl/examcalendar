@@ -3,7 +3,7 @@
 class ExamExport {
 
     public static function exportPDFlist($semester, $selected, $exams, $faculties) {
-        $export = new exportDoc();
+        $export = new ExportDoc();
         $export->setTitle(_('Prüfungskalender'));
         $export->setSubtitle($semester);
         $export->setFilename(_('Prüfungskalender') . ' ' . $semester);
