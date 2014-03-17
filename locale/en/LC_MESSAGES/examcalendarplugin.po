@@ -135,7 +135,7 @@ msgstr "export"
 
 #: models/ExamUtil.php:161
 msgid "Exportieren"
-msgstr ""
+msgstr "Export"
 
 #: models/ExamUtil.php:168
 msgid "Fakultäten"
