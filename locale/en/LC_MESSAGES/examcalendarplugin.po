@@ -131,7 +131,7 @@ msgstr "Output format"
 
 #: models/ExamUtil.php:144
 msgid "exportieren"
-msgstr ""
+msgstr "export"
 
 #: models/ExamUtil.php:161
 msgid "Exportieren"
