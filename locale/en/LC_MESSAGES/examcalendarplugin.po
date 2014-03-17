@@ -139,7 +139,7 @@ msgstr "Export"
 
 #: models/ExamUtil.php:168
 msgid "Fakultäten"
-msgstr ""
+msgstr "Faculties"
 
 #: views/show/error.php:2
 msgid "Das ausgewählte Ausgabeformat ist ungültig."
