@@ -18,7 +18,7 @@ class ExamExport {
         // TODO Farbe
         $ex_table_header[] = _('Datum');
         $ex_table_header[] = _('Veranstaltung');
-        $ex_table_header[] = _('Art');
+        if ($selected > 1) $ex_table_header[] = _('Art'); // TODO statt IF Blacklist implementieren
         $ex_table_header[] = _('Raum');
         $ex_table->header = $ex_table_header;
 
@@ -28,7 +28,7 @@ class ExamExport {
             // TODO Farbe
             $ex_table_row[] = ExamUtil::nice_date($exam['begin']) . ",\n" . ExamUtil::nice_time($exam['begin']) . " - " . ExamUtil::nice_time($exam['end']);
             $ex_table_row[] = $exam['num'] . " " . $exam['title'];
-            $ex_table_row[] = $GLOBALS['TERMIN_TYP'][$exam['type']]['name'];
+            if ($selected > 1) $ex_table_row[] = $GLOBALS['TERMIN_TYP'][$exam['type']]['name']; // TODO statt IF Blacklist implementieren
             $ex_table_row[] = empty($exam['alt_room']) ? $exam['room'] : $exam['alt_room'];
 
             $ex_table_content[] = $ex_table_row;
