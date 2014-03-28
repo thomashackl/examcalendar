@@ -7,6 +7,10 @@ class ShowController extends AuthenticatedController {
         $this->set_content_type('text/html; charset=windows-1252');
     }
 
+    public function index_action() {
+        $this->redirect('show/output');
+    }
+
     private function saveRequestParams() {
         if (Request::option('sem_select')) {
             $this->sem_select = Request::option('sem_select');
