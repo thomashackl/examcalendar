@@ -95,13 +95,15 @@ class ExamDB {
 
     public function getOrderedExams() {
         if (!$this->ordering_done) {
-            // Prüfungen nach Jahr, Monat und Tag sortieren
-            foreach ($this->exams as $exam) {
-                $year  = date("Y", $exam['begin']);
-                $month = date("n", $exam['begin']);
-                $day   = date("j", $exam['begin']);
+            if (!empty($this->exams)) {
+                // Prüfungen nach Jahr, Monat und Tag sortieren
+                foreach ($this->exams as $exam) {
+                    $year  = date("Y", $exam['begin']);
+                    $month = date("n", $exam['begin']);
+                    $day   = date("j", $exam['begin']);
 
-                $this->ordered[$year][$month][$day][] = $exam;
+                    $this->ordered[$year][$month][$day][] = $exam;
+                }
             }
 
             $this->ordering_done = true;

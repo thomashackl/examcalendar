@@ -61,7 +61,7 @@ class ExamUtil {
         // Fakultäten-Legende für Infobox
         $faculty_box = '<table>';
 
-        foreach($faculties as $f) {
+        if (!empty($faculties)) foreach($faculties as $f) {
             $faculty_box .= '    <tr>';
             $faculty_box .= '        <td class="colorbox_info" style="background: #' . $f['color']. '">';
             $faculty_box .= '        </td>';
