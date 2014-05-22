@@ -2,12 +2,12 @@
 
 class ExamDB {
 
-    private $selected;
-    private $exams;
+    private $selected = 0;
+    private $exams = array();
     private $ordering_done = false;
-    private $ordered;
+    private $ordered = array();
     private $faculties_done = false;
-    private $faculties;
+    private $faculties = array();
 
     public function querySQL($semester_id, $studyCourse = 'all', $onlyOwn = false, $deputies = false) {
         $this->ordering_done = false;
@@ -82,7 +82,7 @@ class ExamDB {
         $preparation->execute($inputs);
 
         $result = $preparation->fetchAll();
-        $this->exams = $result;
+        $this->exams = $result ? : array();
     }
 
     public function getSelectedNum() {
