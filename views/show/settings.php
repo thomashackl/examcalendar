@@ -17,8 +17,8 @@ Navigation::activateItem('/calendar/examcalendar/settings');
             <?= _('Folgende Termin-Typen sollen im Prüfungskalender dargestellt werden:') ?>
         </legend>
         <?php for ($i = 1; $i <= count($GLOBALS['TERMIN_TYP']); $i++): ?>
-            <input id="exam_type_<?= $i ?>" class="studip_checkbox" type="checkbox" name="exam_types[]" value="<?= $i ?>"<?= in_array($i, $exam_types) ? ' checked="checked"' : '' ?>/>
-            <label for="exam_type_<?= $i ?>">
+            <label>
+                <input class="studip_checkbox checkbox" type="checkbox" name="exam_types[]" value="<?= $i ?>"<?= in_array($i, $exam_types) ? ' checked="checked"' : '' ?>/>
                 <?= htmlReady($GLOBALS['TERMIN_TYP'][$i]['name']) ?>
             </label>
         <?php endfor ?>
@@ -29,10 +29,8 @@ Navigation::activateItem('/calendar/examcalendar/settings');
             <?= _('Ordnen Sie hier den Fakultäten einen Farbwert zu:') ?>
         </legend>
 
-        <div>
-            <?= _('Farbwerte werden Hexadezimal angegeben, ohne das führende Raute-Zeichen.') ?><br />
-            <?= _('Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur Verfügung.') ?>
-        </div>
+        <?= _('Farbwerte werden Hexadezimal angegeben, ohne das führende Raute-Zeichen.') ?><br />
+        <?= _('Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur Verfügung.') ?><br />
         <br />
 
         <table class="default">
@@ -63,17 +61,19 @@ Navigation::activateItem('/calendar/examcalendar/settings');
 </form>
 
 <?php
-$infobox_content = array(
-    array ('kategorie' => _('Information') . ':',
-           'eintrag'   => array (
-                array ('icon' => 'icons/16/black/info.png',
-                       'text' => _('Wählen Sie die Termin-Typen aus, die bei der Erstellung eines Prüfungskalenders berücksichtigt werden sollen.')
-                ),
-                array ('icon' => 'icons/16/black/info.png',
-                       'text' => _('Die Farben, die Sie den Fakultäten zuordnen, werden in den Listen- und Kalenderausgaben verwendet, um darzustellen, welche Prüfungen zu welchen Fakultäten gehören.') . '<br />' .
-                                 _('Jede Ausgabe enthält eine Legende, die die Farbzuordnung der Fakultäten enthält.')
-                )
-          )
-    )
-);
-$infobox = array('picture' => 'infobox/board2.jpg', 'content' => $infobox_content); // TODO Bild
+if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.1") < 0) {
+    $infobox_content = array(
+        array ('kategorie' => _('Information') . ':',
+               'eintrag'   => array (
+                    array ('icon' => 'icons/16/black/info.png',
+                           'text' => _('Wählen Sie die Termin-Typen aus, die bei der Erstellung eines Prüfungskalenders berücksichtigt werden sollen.')
+                    ),
+                    array ('icon' => 'icons/16/black/info.png',
+                           'text' => _('Die Farben, die Sie den Fakultäten zuordnen, werden in den Listen- und Kalenderausgaben verwendet, um darzustellen, welche Prüfungen zu welchen Fakultäten gehören.') . '<br />' .
+                                     _('Jede Ausgabe enthält eine Legende, die die Farbzuordnung der Fakultäten enthält.')
+                    )
+              )
+        )
+    );
+    $infobox = array('picture' => 'infobox/board2.jpg', 'content' => $infobox_content); // TODO Bild
+}
