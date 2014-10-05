@@ -140,4 +140,4 @@
 <?php endforeach ?>
 
 <?php
-$infobox = ExamUtil::create_infobox($faculties, $controller->url_for('show/output'), $sem_select, $only_own, $deputies, $sem_tree, $format);
+ExamUtil::create_infobox($infobox, $faculties, $controller->url_for('show/output'), $sem_select, $only_own, $deputies, $sem_tree, $format);

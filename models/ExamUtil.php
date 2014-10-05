@@ -57,7 +57,7 @@ class ExamUtil {
         return date("H:i", $timestamp);
     }
 
-    public static function create_infobox($faculties, $url, $sem_select, $only_own, $deputies, $sem_tree, $format) {
+    public static function create_infobox(&$infobox, $faculties, $url, $sem_select, $only_own, $deputies, $sem_tree, $format) {
         // Fakultäten-Legende für Infobox
         $faculty_box = '<table>';
 
@@ -118,8 +118,6 @@ class ExamUtil {
         $settings_box .=          Studip\Button::create(_('aktualisieren'));
         $settings_box .= '    </noscript>';
 
-        $settings_box .= '    <br />';
-        $settings_box .= '    <br />';
         $settings_box .= '</form>';
 
         // Export
@@ -142,40 +140,59 @@ class ExamUtil {
         $export_box .= '    <br />';
 
         $export_box .=      Studip\Button::create(_('exportieren'));
-        $export_box .= '    <br />';
-        $export_box .= '    <br />';
+
         $export_box .= '</form>';
 
         // Zusammensetzen des Inhalts
-        $infobox_content = array(
-            array ('kategorie' => _('Einstellungen') . ':',
-                   'eintrag'   => array (
-                       array ('text' => $settings_box)
-                  )
-            ),
-        );
+        if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.1") >= 0) {
+            $sidebar = Sidebar::get();
 
-        if (!empty($faculties)) {
-            // zeige Export nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)
-            $infobox_content[] =
-            array ('kategorie' => _('Exportieren') . ':',
-                   'eintrag'   => array (
-                       array ('text' => $export_box)
-                  )
+            $settings_widget = new SidebarWidget();
+            $settings_widget->setTitle(_('Einstellungen') . ':');
+            $settings_widget->addElement(new WidgetElement($settings_box));
+            $sidebar->addWidget($settings_widget, 'settings');
+
+            if (!empty($faculties)) {
+                // zeige Export nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)
+                $export_widget = new SidebarWidget();
+                $export_widget->setTitle(_('Exportieren') . ':');
+                $export_widget->addElement(new WidgetElement($export_box));
+                $sidebar->addWidget($export_widget, 'export');
+
+                $faculties_widget = new SidebarWidget();
+                $faculties_widget->setTitle(_('Fakultäten') . ':');
+                $faculties_widget->addElement(new WidgetElement($faculty_box));
+                $sidebar->addWidget($faculties_widget, 'faculties');
+            }
+        } else {
+            $infobox_content = array(
+                array ('kategorie' => _('Einstellungen') . ':',
+                       'eintrag'   => array (
+                           array ('text' => $settings_box . '<br /><br />')
+                      )
+                ),
             );
 
-            $infobox_content[] =
-            array ('kategorie' => _('Fakultäten') . ':',
-                   'eintrag'   => array (
-                       array ('text' => $faculty_box)
-                  )
-            );
+            if (!empty($faculties)) {
+                // zeige Export nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)
+                $infobox_content[] =
+                array ('kategorie' => _('Exportieren') . ':',
+                       'eintrag'   => array (
+                           array ('text' => $export_box . '<br /><br />')
+                      )
+                );
+
+                $infobox_content[] =
+                array ('kategorie' => _('Fakultäten') . ':',
+                       'eintrag'   => array (
+                           array ('text' => $faculty_box)
+                      )
+                );
+            }
+
+            // fertige Infobox
+            $infobox = array('picture' => 'infobox/board2.jpg', 'content' => $infobox_content); // TODO Bild
         }
-
-        // fertige Infobox
-        $infobox = array('picture' => 'infobox/board2.jpg', 'content' => $infobox_content); // TODO Bild
-
-        return $infobox;
     }
 
 }
