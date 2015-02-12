@@ -1,9 +1,0 @@
-QuickSearch Fakultäten / Studiengänge?
-
-PDF Liste: Legende für Fakultäten
-PDF Kalender
-
-locale/en/LC_MESSAGES/studip.po-15895-msgid "Mo"
-locale/en/LC_MESSAGES/studip.po:15896:msgstr "Mon."
-
-views/show/html_calendar.php Table-Header Tage mit getWeekday?

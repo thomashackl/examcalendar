@@ -4,17 +4,17 @@ Navigation::activateItem('/calendar/examcalendar/settings');
 ?>
 
 <?php if ($update_success): ?>
-    <?= MessageBox::success(_('Die Einstellungen wurden gespeichert.')) ?>
+    <?= MessageBox::success(dgettext('examcalendar', 'Die Einstellungen wurden gespeichert.')) ?>
 <?php endif ?>
 
 <form id="settings" action="<?= $controller->url_for('show/update') ?>" method="post" class="studip_form">
     <h2>
-        <?= _('Globale Einstellungen für den Prüfungskalender') ?>
+        <?= dgettext('examcalendar', 'Globale Einstellungen für den Prüfungskalender') ?>
     </h2>
 
     <fieldset>
         <legend>
-            <?= _('Folgende Termin-Typen sollen im Prüfungskalender dargestellt werden:') ?>
+            <?= dgettext('examcalendar', 'Folgende Termin-Typen sollen im Prüfungskalender dargestellt werden:') ?>
         </legend>
         <?php for ($i = 1; $i <= count($GLOBALS['TERMIN_TYP']); $i++): ?>
             <label>
@@ -26,20 +26,20 @@ Navigation::activateItem('/calendar/examcalendar/settings');
 
     <fieldset>
         <legend>
-            <?= _('Ordnen Sie hier den Fakultäten einen Farbwert zu:') ?>
+            <?= dgettext('examcalendar', 'Ordnen Sie hier den Fakultäten einen Farbwert zu:') ?>
         </legend>
 
-        <?= _('Farbwerte werden Hexadezimal angegeben, ohne das führende Raute-Zeichen.') ?><br />
-        <?= _('Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur Verfügung.') ?><br />
+        <?= dgettext('examcalendar', 'Farbwerte werden Hexadezimal angegeben, ohne das führende Raute-Zeichen.') ?><br />
+        <?= dgettext('examcalendar', 'Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur Verfügung.') ?><br />
         <br />
 
         <table class="default">
             <tr>
                 <th>
-                    <?= _('Fakultät') ?>
+                    <?= dgettext('examcalendar', 'Fakultät') ?>
                 </th>
                 <th>
-                    <?= _('Farbe') ?>
+                    <?= dgettext('examcalendar', 'Farbe') ?>
                 </th>
             </tr>
             <?php foreach ($faculties as $f): ?>
@@ -57,20 +57,20 @@ Navigation::activateItem('/calendar/examcalendar/settings');
     </fieldset>
 
     <?= Studip\Button::createAccept() ?>
-    <button type="reset" class="cancel button" name="resetButton" id="resetButton"><?= _('zurücksetzen') ?></button>
+    <button type="reset" class="cancel button" name="resetButton" id="resetButton"><?= dgettext('examcalendar', 'zurücksetzen') ?></button>
 </form>
 
 <?php
 if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.1") < 0) {
     $infobox_content = array(
-        array ('kategorie' => _('Information') . ':',
+        array ('kategorie' => dgettext('examcalendar', 'Information') . ':',
                'eintrag'   => array (
                     array ('icon' => 'icons/16/black/info.png',
-                           'text' => _('Wählen Sie die Termin-Typen aus, die bei der Erstellung eines Prüfungskalenders berücksichtigt werden sollen.')
+                           'text' => dgettext('examcalendar', 'Wählen Sie die Termin-Typen aus, die bei der Erstellung eines Prüfungskalenders berücksichtigt werden sollen.')
                     ),
                     array ('icon' => 'icons/16/black/info.png',
-                           'text' => _('Die Farben, die Sie den Fakultäten zuordnen, werden in den Listen- und Kalenderausgaben verwendet, um darzustellen, welche Prüfungen zu welchen Fakultäten gehören.') . '<br />' .
-                                     _('Jede Ausgabe enthält eine Legende, die die Farbzuordnung der Fakultäten enthält.')
+                           'text' => dgettext('examcalendar', 'Die Farben, die Sie den Fakultäten zuordnen, werden in den Listen- und Kalenderausgaben verwendet, um darzustellen, welche Prüfungen zu welchen Fakultäten gehören.') . '<br />' .
+                                     dgettext('examcalendar', 'Jede Ausgabe enthält eine Legende, die die Farbzuordnung der Fakultäten enthält.')
                     )
               )
         )

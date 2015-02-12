@@ -2,7 +2,7 @@
 require 'bootstrap.php';
 
 /**
- * Pruefungskalender.class.php
+ * ExamCalendar.class.php
  *
  * Erstellt eine Auflistung aller Prüfungen eines Semesters, wahlweise nur von
  * eigenen Veranstaltungen, bzw. bestimmten Fakultäten oder Studiengängen, und
@@ -26,8 +26,10 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
     public function __construct() {
         parent::__construct();
 
+        bindtextdomain('examcalendar', __DIR__.'/locale');
+
         $navigation = Navigation::getItem('/calendar'); // Hauptmenü "Planer"
-        $examcalendar_navi = new AutoNavigation(_('Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
+        $examcalendar_navi = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
         $navigation->addSubNavigation('examcalendar', $examcalendar_navi);
     }
 
@@ -37,12 +39,12 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
 
     public function perform($unconsumed_path) {
         $navigation = Navigation::getItem('/calendar/examcalendar');
-        $navi_output = new AutoNavigation(_('Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
+        $navi_output = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
         $navigation->addSubNavigation('output', $navi_output);
 
         // Einstellungen sieht nur root
          if ($GLOBALS['perm']->have_perm('root')) {
-            $navi_settings = new AutoNavigation(_('Einstellungen'), PluginEngine::getUrl('examcalendar/show/settings'));
+            $navi_settings = new AutoNavigation(dgettext('examcalendar', 'Einstellungen'), PluginEngine::getUrl('examcalendar/show/settings'));
             $navigation->addSubNavigation('settings', $navi_settings);
         }
 
@@ -55,8 +57,6 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
             PageLayout::addScript($this->getPluginURL() . '/assets/jscolor/jscolor.js');
             PageLayout::addScript($this->getPluginURL() . '/assets/application.js');
         }
-
-
 
         $this->setupAutoload();
         $dispatcher = new Trails_Dispatcher(

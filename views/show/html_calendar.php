@@ -1,5 +1,5 @@
 <h2>
-    <?= sprintf(_('Prüfungskalender für das %s'), htmlReady($semester)) ?>
+    <?= sprintf(dgettext('examcalendar', 'Prüfungskalender für das %s'), htmlReady($semester)) ?>
 </h2>
 
 <?php foreach ($exams as $year => $exams): ?>
@@ -11,28 +11,28 @@
             <thead>
                 <tr>
                     <th class="week">
-                        <?= _('KW') ?>
+                        <?= dgettext('examcalendar', 'KW') ?>
                     </th>
                     <th>
-                        <?= _('Mo') ?>
+                        <?= dgettext('examcalendar', 'Mo') ?>
                     </th>
                     <th>
-                        <?= _('Di') ?>
+                        <?= dgettext('examcalendar', 'Di') ?>
                     </th>
                     <th>
-                        <?= _('Mi') ?>
+                        <?= dgettext('examcalendar', 'Mi') ?>
                     </th>
                     <th>
-                        <?= _('Do') ?>
+                        <?= dgettext('examcalendar', 'Do') ?>
                     </th>
                     <th>
-                        <?= _('Fr') ?>
+                        <?= dgettext('examcalendar', 'Fr') ?>
                     </th>
                     <th>
-                        <?= _('Sa') ?>
+                        <?= dgettext('examcalendar', 'Sa') ?>
                     </th>
                     <th>
-                        <?= _('So') ?>
+                        <?= dgettext('examcalendar', 'So') ?>
                     </th>
                 </tr>
             </thead>

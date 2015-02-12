@@ -4,9 +4,9 @@ class ExamExport {
 
     public static function exportPDFlist($semester, $selected, $exams, $faculties) {
         $export = new ExportDoc();
-        $export->setTitle(_('Prüfungskalender'));
+        $export->setTitle(dgettext('examcalendar', 'Prüfungskalender'));
         $export->setSubtitle($semester);
-        $export->setFilename(_('Prüfungskalender') . ' ' . $semester);
+        $export->setFilename(dgettext('examcalendar', 'Prüfungskalender') . ' ' . $semester);
 
         // TODO Fakultäten
         // Tabelle: Farbe | Fakultät
@@ -16,10 +16,10 @@ class ExamExport {
 
         $ex_table_header = array();
         // TODO Farbe
-        $ex_table_header[] = _('Datum');
-        $ex_table_header[] = _('Veranstaltung');
-        if ($selected > 1) $ex_table_header[] = _('Art'); // TODO statt IF Blacklist implementieren
-        $ex_table_header[] = _('Raum');
+        $ex_table_header[] = dgettext('examcalendar', 'Datum');
+        $ex_table_header[] = dgettext('examcalendar', 'Veranstaltung');
+        if ($selected > 1) $ex_table_header[] = dgettext('examcalendar', 'Art'); // TODO statt IF Blacklist implementieren
+        $ex_table_header[] = dgettext('examcalendar', 'Raum');
         $ex_table->header = $ex_table_header;
 
         $ex_table_content = array();
@@ -35,7 +35,7 @@ class ExamExport {
         }
         $ex_table->content = $ex_table_content;
 
-        if ($selected < 2) $ex_table->blacklist[] = _('Art');
+        if ($selected < 2) $ex_table->blacklist[] = dgettext('examcalendar', 'Art');
 
         // Dokument ausgeben
         $export->export('PDF');

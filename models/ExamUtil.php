@@ -6,14 +6,14 @@ class ExamUtil {
 
     public static function get_display_formats() {
         return array(
-            'html_list'     => _('Liste'),
-            'html_calendar' => _('Kalender')
+            'html_list'     => dgettext('examcalendar', 'Liste'),
+            'html_calendar' => dgettext('examcalendar', 'Kalender')
         );
     }
 
     public static function get_export_formats() {
         return array(
-            'pdf_list'      => 'PDF (' . _('Liste') . ')',
+            'pdf_list'      => 'PDF (' . dgettext('examcalendar', 'Liste') . ')',
             'ical'          => 'iCal'
         );
     }
@@ -21,31 +21,31 @@ class ExamUtil {
     public static function getMonth($month) {
         switch($month) {
             case 1:
-                return _('Januar');
+                return dgettext('examcalendar', 'Januar');
             case 2:
-                return _('Februar');
+                return dgettext('examcalendar', 'Februar');
             case 3:
-                return _('März');
+                return dgettext('examcalendar', 'März');
             case 4:
-                return _('April');
+                return dgettext('examcalendar', 'April');
             case 5:
-                return _('Mai');
+                return dgettext('examcalendar', 'Mai');
             case 6:
-                return _('Juni');
+                return dgettext('examcalendar', 'Juni');
             case 7:
-                return _('Juli');
+                return dgettext('examcalendar', 'Juli');
             case 8:
-                return _('August');
+                return dgettext('examcalendar', 'August');
             case 9:
-                return _('September');
+                return dgettext('examcalendar', 'September');
             case 10:
-                return _('Oktober');
+                return dgettext('examcalendar', 'Oktober');
             case 11:
-                return _('November');
+                return dgettext('examcalendar', 'November');
             case 12:
-                return _('Dezember');
+                return dgettext('examcalendar', 'Dezember');
             default:
-                return _('ungültiger Monat');
+                return dgettext('examcalendar', 'ungültiger Monat');
         }
     }
 
@@ -82,7 +82,7 @@ class ExamUtil {
         $deputiesPreset = $deputies ? ' checked="checked"' : '';
 
         $settings_box .= '    <label>';
-        $settings_box .=          _('Semester') . ':';
+        $settings_box .=          dgettext('examcalendar', 'Semester') . ':';
         $settings_box .=          SemesterData::getInstance()->GetSemesterSelector(array('onchange' => 'this.form.submit();'), $sem_select, 'semester_id', false);
         $settings_box .= '    </label>';
         $settings_box .= '    <br />';
@@ -90,21 +90,21 @@ class ExamUtil {
 
         $settings_box .= '    <label>';
         $settings_box .= '        <input class="checkbox" type="checkbox" name="only_own"' . $onlyOwnPreset . ' onchange="this.form.submit();" />';
-        $settings_box .=          _('nur eigene Veranstaltungen');
+        $settings_box .=          dgettext('examcalendar', 'nur eigene Veranstaltungen');
         $settings_box .= '    </label>';
         if ($dozentPerms) {
             $settings_box .= '    <br />';
 
             $settings_box .= '    <label>';
             $settings_box .= '        <input class="checkbox" type="checkbox" name="deputies"' . $deputiesPreset . ' onchange="this.form.submit();" />';
-            $settings_box .=          _('Dozierendenvertretung');
+            $settings_box .=          dgettext('examcalendar', 'Dozierendenvertretung');
             $settings_box .= '    </label>';
         }
         $settings_box .= '    <br />';
         $settings_box .= '    <br />';
 
         $settings_box .= '    <label>';
-        $settings_box .=          _('Anzeigeformat') . ':';
+        $settings_box .=          dgettext('examcalendar', 'Anzeigeformat') . ':';
         $settings_box .= '        <select name="format" size="1" onchange="this.form.submit();">';
         foreach ($display_formats as $id => $name) {
             $settings_box .= '            <option value="' . $id .'"' . ($format == $id ? ' selected="selected"' : '') . '>' . $name . '</option>';
@@ -115,7 +115,7 @@ class ExamUtil {
         $settings_box .= '    <noscript>';
         $settings_box .= '        <br />';
         $settings_box .= '        <br />';
-        $settings_box .=          Studip\Button::create(_('aktualisieren'));
+        $settings_box .=          Studip\Button::create(dgettext('examcalendar', 'aktualisieren'));
         $settings_box .= '    </noscript>';
 
         $settings_box .= '</form>';
@@ -130,7 +130,7 @@ class ExamUtil {
         $export_box .= '    <input type="hidden" name="deputies" value="' . $deputies . '" />';
 
         $export_box .= '    <label>';
-        $export_box .=          _('Ausgabeformat') . ':';
+        $export_box .=          dgettext('examcalendar', 'Ausgabeformat') . ':';
         $export_box .= '        <select name="format" size="1">';
         foreach ($export_formats as $id => $name) {
             $export_box .= '            <option value="' . $id .'">' . $name . '</option>';
@@ -139,7 +139,7 @@ class ExamUtil {
         $export_box .= '    </label>';
         $export_box .= '    <br />';
 
-        $export_box .=      Studip\Button::create(_('exportieren'));
+        $export_box .=      Studip\Button::create(dgettext('examcalendar', 'exportieren'));
 
         $export_box .= '</form>';
 
@@ -155,12 +155,12 @@ class ExamUtil {
             );
 
 //             $settings_widget = new SidebarWidget();
-//             $settings_widget->setTitle(_('Einstellungen') . ':');
+//             $settings_widget->setTitle(dgettext('examcalendar', 'Einstellungen') . ':');
 //             $settings_widget->addElement(new WidgetElement($settings_box));
 //             $sidebar->addWidget($settings_widget, 'settings');
 
             // Semester-Auswahl
-            $semester_widget = new SelectWidget(_('Semester') . ':', $controller->url_for('show/output', $options), 'sem_select');
+            $semester_widget = new SelectWidget(dgettext('examcalendar', 'Semester') . ':', $controller->url_for('show/output', $options), 'sem_select');
             foreach (array_reverse(Semester::getAll()) as $sem) {
                 $semester_widget->addElement(new SelectElement($sem->id, $sem->name, $sem_select == $sem));
             }
@@ -168,13 +168,13 @@ class ExamUtil {
 
             // Einstellungen (Checkboxen)
             $options_widget = new OptionsWidget();
-            $options_widget->addCheckbox(_('nur eigene Veranstaltungen'),
+            $options_widget->addCheckbox(dgettext('examcalendar', 'nur eigene Veranstaltungen'),
                                          $only_own,
                                          $controller->url_for('show/output', array_merge($params, array('only_own' => 1))),
                                          $controller->url_for('show/output', array_merge($params, array('only_own' => 0)))
                                         );
             if ($dozentPerms) {
-                $options_widget->addCheckbox(_('Dozierendenvertretung'),
+                $options_widget->addCheckbox(dgettext('examcalendar', 'Dozierendenvertretung'),
                                              $deputies,
                                              $controller->url_for('show/output', array_merge($params, array('deputies' => 1))),
                                              $controller->url_for('show/output', array_merge($params, array('deputies' => 0)))
@@ -192,18 +192,18 @@ class ExamUtil {
             if (!empty($faculties)) {
                 // zeige Export nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)
                 $export_widget = new SidebarWidget();
-                $export_widget->setTitle(_('Exportieren') . ':');
+                $export_widget->setTitle(dgettext('examcalendar', 'Exportieren') . ':');
                 $export_widget->addElement(new WidgetElement($export_box));
                 $sidebar->addWidget($export_widget, 'export');
 
                 $faculties_widget = new SidebarWidget();
-                $faculties_widget->setTitle(_('Fakultäten') . ':');
+                $faculties_widget->setTitle(dgettext('examcalendar', 'Fakultäten') . ':');
                 $faculties_widget->addElement(new WidgetElement($faculty_box));
                 $sidebar->addWidget($faculties_widget, 'faculties');
             }
         } else {
             $infobox_content = array(
-                array ('kategorie' => _('Einstellungen') . ':',
+                array ('kategorie' => dgettext('examcalendar', 'Einstellungen') . ':',
                        'eintrag'   => array (
                            array ('text' => $settings_box . '<br /><br />')
                       )
@@ -213,14 +213,14 @@ class ExamUtil {
             if (!empty($faculties)) {
                 // zeige Export nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)
                 $infobox_content[] =
-                array ('kategorie' => _('Exportieren') . ':',
+                array ('kategorie' => dgettext('examcalendar', 'Exportieren') . ':',
                        'eintrag'   => array (
                            array ('text' => $export_box . '<br /><br />')
                       )
                 );
 
                 $infobox_content[] =
-                array ('kategorie' => _('Fakultäten') . ':',
+                array ('kategorie' => dgettext('examcalendar', 'Fakultäten') . ':',
                        'eintrag'   => array (
                            array ('text' => $faculty_box)
                       )

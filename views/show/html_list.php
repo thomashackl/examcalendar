@@ -1,6 +1,6 @@
 <table class="default">
     <caption>
-        <?= sprintf(_('Prüfungskalender für das %s'), htmlReady($semester)) ?>
+        <?= sprintf(dgettext('examcalendar', 'Prüfungskalender für das %s'), htmlReady($semester)) ?>
     </caption>
     <thead>
         <tr>
@@ -8,18 +8,18 @@
 
             </th>
             <th>
-                <?= _('Datum') ?>
+                <?= dgettext('examcalendar', 'Datum') ?>
             </th>
             <th>
-                <?= _('Veranstaltung') ?>
+                <?= dgettext('examcalendar', 'Veranstaltung') ?>
             </th>
             <?php if ($selected > 1): ?>
                 <th>
-                    <?= _('Art') ?>
+                    <?= dgettext('examcalendar', 'Art') ?>
                 </th>
             <?php endif ?>
             <th>
-                <?= _('Raum') ?>
+                <?= dgettext('examcalendar', 'Raum') ?>
             </th>
         </tr>
     </thead>
