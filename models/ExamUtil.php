@@ -57,7 +57,7 @@ class ExamUtil {
         return date("H:i", $timestamp);
     }
 
-    public static function create_infobox(&$infobox, $faculties, $url, $sem_select, $only_own, $deputies, $sem_tree, $format) {
+    public static function create_infobox(&$infobox, $faculties, $controller, $sem_select, $only_own, $deputies, $sem_tree, $format) {
         // Fakultäten-Legende für Infobox
         $faculty_box = '<table>';
 
@@ -74,7 +74,7 @@ class ExamUtil {
         $faculty_box .= '</table>';
 
         // Einstellungen für den Prüfungskalender
-        $settings_box  = '<form action="' . $url . '" method="post">';
+        $settings_box  = '<form action="' . $url . '" method="get">';
 
         $display_formats = ExamUtil::get_display_formats();
         $onlyOwnPreset = $only_own ? ' checked="checked"' : '';
@@ -147,10 +147,47 @@ class ExamUtil {
         if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.1") >= 0) {
             $sidebar = Sidebar::get();
 
-            $settings_widget = new SidebarWidget();
-            $settings_widget->setTitle(_('Einstellungen') . ':');
-            $settings_widget->addElement(new WidgetElement($settings_box));
-            $sidebar->addWidget($settings_widget, 'settings');
+            $params = array(
+                'sem_select' => $sem_select,
+                'only_own' => $only_own,
+                'deputies' => $deputies,
+                'format' => $format
+            );
+
+//             $settings_widget = new SidebarWidget();
+//             $settings_widget->setTitle(_('Einstellungen') . ':');
+//             $settings_widget->addElement(new WidgetElement($settings_box));
+//             $sidebar->addWidget($settings_widget, 'settings');
+
+            // Semester-Auswahl
+            $semester_widget = new SelectWidget(_('Semester') . ':', $controller->url_for('show/output', $options), 'sem_select');
+            foreach (array_reverse(Semester::getAll()) as $sem) {
+                $semester_widget->addElement(new SelectElement($sem->id, $sem->name, $sem_select == $sem));
+            }
+            $sidebar->addWidget($semester_widget);
+
+            // Einstellungen (Checkboxen)
+            $options_widget = new OptionsWidget();
+            $options_widget->addCheckbox(_('nur eigene Veranstaltungen'),
+                                         $only_own,
+                                         $controller->url_for('show/output', array_merge($params, array('only_own' => 1))),
+                                         $controller->url_for('show/output', array_merge($params, array('only_own' => 0)))
+                                        );
+            if ($dozentPerms) {
+                $options_widget->addCheckbox(_('Dozierendenvertretung'),
+                                             $deputies,
+                                             $controller->url_for('show/output', array_merge($params, array('deputies' => 1))),
+                                             $controller->url_for('show/output', array_merge($params, array('deputies' => 0)))
+                                            );
+            }
+            $sidebar->addWidget($options_widget);
+
+            // Ansichten-Auswahl
+            $views_widget = new ViewsWidget();
+            foreach ($display_formats as $id => $name) {
+                $views_widget->addLink($name, $controller->url_for('show/output', array_merge($params, array('format' => $id))))->setActive($format == $id);
+            }
+            $sidebar->addWidget($views_widget);
 
             if (!empty($faculties)) {
                 // zeige Export nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)

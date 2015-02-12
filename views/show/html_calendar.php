@@ -85,7 +85,7 @@
 
                         <?php
                         $i = 1;
-                        foreach ($exams[$day] as $exam) {
+                        if ($exams[$day]) foreach ($exams[$day] as $exam) {
                         ?>
                             <div class="exam">
                                 <div class="<?= $i == 1 ? 'first-': '' ?>time">
@@ -140,4 +140,4 @@
 <?php endforeach ?>
 
 <?php
-ExamUtil::create_infobox($infobox, $faculties, $controller->url_for('show/output'), $sem_select, $only_own, $deputies, $sem_tree, $format);
+ExamUtil::create_infobox($infobox, $faculties, $controller, $sem_select, $only_own, $deputies, $sem_tree, $format);
