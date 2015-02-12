@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-06-18 08:33+0200\n"
-"PO-Revision-Date: 2014-06-18 08:41+0200\n"
+"PO-Revision-Date: 2015-01-21 12:50+0200\n"
 "Last-Translator: Thomas <Thomas.Hackl@uni-passau.de>\n"
 "Language-Team: English "
 "<http://example.com/weblate/projects/studip/examcalendar/en/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 1.10-dev\n"
+"X-Generator: Weblate 2.1-dev\n"
 
 #: ExamCalendar.class.php:30 ExamCalendar.class.php:40 models/ExamExport.php:7
 #: models/ExamExport.php:9
@@ -191,7 +191,7 @@ msgstr "Sun"
 
 #: views/show/settings.php:7
 msgid "Die Einstellungen wurden gespeichert."
-msgstr "The settings have been saved."
+msgstr "Settings have been saved."
 
 #: views/show/settings.php:12
 msgid "Globale Einstellungen für den Prüfungskalender"
