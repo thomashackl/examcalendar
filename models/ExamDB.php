@@ -82,7 +82,7 @@ class ExamDB {
         $preparation->execute($inputs);
 
         $result = $preparation->fetchAll();
-        $this->exams = $result ? : array();
+        $this->exams = $result ? : array(); // TODO ternary nötig?
     }
 
     public function getSelectedNum() {

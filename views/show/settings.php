@@ -61,19 +61,9 @@ Navigation::activateItem('/calendar/examcalendar/settings');
 </form>
 
 <?php
-if (version_compare($GLOBALS['SOFTWARE_VERSION'], "3.1") < 0) {
-    $infobox_content = array(
-        array ('kategorie' => dgettext('examcalendar', 'Information') . ':',
-               'eintrag'   => array (
-                    array ('icon' => 'icons/16/black/info.png',
-                           'text' => dgettext('examcalendar', 'Wählen Sie die Termin-Typen aus, die bei der Erstellung eines Prüfungskalenders berücksichtigt werden sollen.')
-                    ),
-                    array ('icon' => 'icons/16/black/info.png',
-                           'text' => dgettext('examcalendar', 'Die Farben, die Sie den Fakultäten zuordnen, werden in den Listen- und Kalenderausgaben verwendet, um darzustellen, welche Prüfungen zu welchen Fakultäten gehören.') . '<br />' .
-                                     dgettext('examcalendar', 'Jede Ausgabe enthält eine Legende, die die Farbzuordnung der Fakultäten enthält.')
-                    )
-              )
-        )
-    );
-    $infobox = array('picture' => 'infobox/board2.jpg', 'content' => $infobox_content); // TODO Bild
-}
+$helpbar = Helpbar::Get();
+$helpbar->addPlainText('', array(
+    dgettext('examcalendar', 'Wählen Sie die Termin-Typen aus, die bei der Erstellung eines Prüfungskalenders berücksichtigt werden sollen.'),
+    dgettext('examcalendar', 'Die Farben, die Sie den Fakultäten zuordnen, werden in den Listen- und Kalenderausgaben verwendet, um darzustellen, welche Prüfungen zu welchen Fakultäten gehören.'),
+    dgettext('examcalendar', 'Jede Ausgabe enthält eine Legende, die die Farbzuordnung der Fakultäten enthält.')
+));

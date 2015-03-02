@@ -38,12 +38,12 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
     }
 
     public function perform($unconsumed_path) {
-        $navigation = Navigation::getItem('/calendar/examcalendar');
-        $navi_output = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
-        $navigation->addSubNavigation('output', $navi_output);
+        // Einstellungen (und damit komplette Navigation) sieht nur root
+        if ($GLOBALS['perm']->have_perm('root')) {
+            $navigation = Navigation::getItem('/calendar/examcalendar');
+            $navi_output = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
+            $navigation->addSubNavigation('output', $navi_output);
 
-        // Einstellungen sieht nur root
-         if ($GLOBALS['perm']->have_perm('root')) {
             $navi_settings = new AutoNavigation(dgettext('examcalendar', 'Einstellungen'), PluginEngine::getUrl('examcalendar/show/settings'));
             $navigation->addSubNavigation('settings', $navi_settings);
         }
@@ -54,8 +54,8 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
 
         // JS Color Picker für die Einstellungen
         if ($GLOBALS['perm']->have_perm('root')) {
-            PageLayout::addScript($this->getPluginURL() . '/assets/jscolor/jscolor.js');
-            PageLayout::addScript($this->getPluginURL() . '/assets/application.js');
+            PageLayout::addScript($this->getPluginURL() . '/vendor/jscolor/jscolor.js');
+            PageLayout::addScript($this->getPluginURL() . '/assets/settings.js');
         }
 
         $this->setupAutoload();

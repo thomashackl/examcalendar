@@ -82,6 +82,8 @@ class ShowController extends AuthenticatedController {
     }
 
     public function settings_action() {
+        $GLOBALS['perm']->check('root');
+
         $settings = new Settings();
         $settings->querySQL();
         $this->faculties = $settings->getFaculties();
@@ -89,6 +91,8 @@ class ShowController extends AuthenticatedController {
     }
 
     public function update_action() {
+        $GLOBALS['perm']->check('root');
+
         // Fakultäts-IDs und Farbwerte zusammenfassen, ungültige Farbwerte mit 000000 ersetzen
         $fac_id_array = Request::optionArray('fac_id');
         $color_array = Request::optionArray('color');

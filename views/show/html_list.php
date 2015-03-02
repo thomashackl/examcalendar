@@ -50,4 +50,4 @@
 </table>
 
 <?php
-ExamUtil::create_infobox($infobox, $faculties, $controller, $sem_select, $only_own, $deputies, $sem_tree, $format);
+ExamUtil::create_infobox($controller, $sem_select, $only_own, $deputies, $sem_tree, $format, $faculties);

@@ -3,6 +3,6 @@ pluginclassname=ExamCalendar
 origin=intelec
 version=1.0
 description=Erstellt eine Übersicht über die Prüfungen eines Semesters in verschiedenen Ausgabeformaten 
-studipMinVersion=3.0
+studipMinVersion=3.1
 dbscheme=sql/install.sql
 uninstalldbscheme=sql/uninstall.sql
