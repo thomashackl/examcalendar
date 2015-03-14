@@ -33,7 +33,7 @@
                     <?= ExamUtil::nice_time($exam['begin']) ?> - <?= ExamUtil::nice_time($exam['end']) ?>
                 </td>
                 <td>
-                    <?= htmlReady($exam['num']) ?> <?= htmlReady($exam['title']) ?>
+                    <a href="<?= URLHelper::getLink('dispatch.php/course/' . ($only_own ? 'overview?cid' : 'details?sem_id') . '=' . $exam['sem_id']) ?>"><?= htmlReady($exam['num']) ?> <?= htmlReady($exam['title']) ?></a>
                 </td>
                 <?php if ($selected > 1): ?>
                     <td>

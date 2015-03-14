@@ -96,7 +96,7 @@
                                 </div>
 
                                 <div class="title">
-                                    <?= htmlReady($exam['title']) ?>
+                                    <a href="<?= URLHelper::getLink('dispatch.php/course/' . ($only_own ? 'overview?cid' : 'details?sem_id') . '=' . $exam['sem_id']) ?>"><?= htmlReady($exam['title']) ?></a>
                                 </div>
 
                                 <?php if ($selected > 1): ?>

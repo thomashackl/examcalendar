@@ -30,6 +30,7 @@ class ExamDB {
 
         // Prüfungen abfragen, die den gewählten Einstellungen entsprechen
         $select = "SELECT DISTINCT i.fakultaets_id AS fac_id,
+                                   s.Seminar_id AS sem_id,
                                    s.VeranstaltungsNummer AS num,
                                    s.Name AS title,
                                    t.date AS begin,
