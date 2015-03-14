@@ -2,9 +2,6 @@
 
 class Settings {
 
-    private $faculties;
-    private $exam_types;
-
     public static function bin_encode($input) {
         $result = 0;
 
@@ -27,7 +24,22 @@ class Settings {
         return $result;
     }
 
-    public function querySQL() {
+    public static function getExamTypes() {
+        $db = DBManager::get();
+
+        // Termintypen für den Prüfungskalender abrufen
+        $select = "SELECT value";
+        $from  = " FROM exam_calendar_settings";
+        $where = " WHERE setting = 'exam_types'";
+
+        $preparation = $db->prepare($select . $from . $where, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $preparation->execute();
+
+        $result = $preparation->fetchAll();
+        return self::bin_decode($result[0]['value']);
+    }
+
+    public static function getFaculties() {
         $db = DBManager::get();
 
         // Fakultäten und eingetragene Farben abrufen
@@ -40,36 +52,14 @@ class Settings {
         $preparation = $db->prepare($select . $from . $order, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $preparation->execute();
 
-        $result = $preparation->fetchAll();
-        $this->faculties = $result;
-
-        // Termintypen für den Prüfungskalender abrufen
-        $select = "SELECT value";
-        $from  = " FROM exam_calendar_settings";
-        $where = " WHERE setting = 'exam_types'";
-
-        $preparation = $db->prepare($select . $from . $where, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-        $preparation->execute();
-
-        $result = $preparation->fetchAll();
-        $this->exam_types = Settings::bin_decode($result[0]['value']);
+        return $preparation->fetchAll();
     }
 
-    public function updateSQL($faculties, $exam_types) {
+    public function updateExamTypes($exam_types) {
         $db = DBManager::get();
 
-        // Fakultäten und eingetragene Farben updaten
-        foreach ($faculties as $fac_id => $color) {
-            $insert  = "INSERT INTO exam_calendar_faculty_colors (fakultaets_id, color)"; // TODO REPLACE INTO
-            $values = " VALUES (:id, '" . $color . "')";
-            $update = " ON DUPLICATE KEY UPDATE color = '" . $color . "'";
-
-            $preparation = $db->prepare($insert . $values . $update, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
-            $preparation->execute(array('id' => $fac_id));
-        }
-
         // Termintypen für den Prüfungskalender updaten
-        $exam_values = Settings::bin_encode($exam_types);
+        $exam_values = self::bin_encode($exam_types);
 
         $update = "UPDATE exam_calendar_settings";
         $set   = " SET value = '" . $exam_values . "'";
@@ -79,12 +69,17 @@ class Settings {
         $preparation->execute();
     }
 
-    public function getExamTypes() {
-        return $this->exam_types;
-    }
+    public static function updateFaculties($faculties) {
+        $db = DBManager::get();
 
-    public function getFaculties() {
-        return $this->faculties;
+        // Fakultäten und eingetragene Farben updaten
+        foreach ($faculties as $fac_id => $color) {
+            $insert  = "REPLACE INTO exam_calendar_faculty_colors (fakultaets_id, color)";
+            $values = " VALUES (:id, '" . $color . "')";
+
+            $preparation = $db->prepare($insert . $values, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+            $preparation->execute(array('id' => $fac_id));
+        }
     }
 
 }

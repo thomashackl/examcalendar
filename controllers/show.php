@@ -5,37 +5,61 @@ class ShowController extends AuthenticatedController {
     public function before_filter(&$action, &$args) {
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
         $this->set_content_type('text/html; charset=windows-1252');
-    }
 
-    public function index_action() {
-        $this->redirect('show/output');
+        PageLayout::addStylesheet($this->dispatcher->plugin->getPluginURL() . '/assets/show/style.css');
     }
 
     private function saveRequestParams() {
         if (Request::option('sem_select')) {
             $this->sem_select = Request::option('sem_select');
-//             $this->sem_tree = Request::option('sem_tree') ? Request::option('sem_tree') : 'all';
             $this->only_own = Request::get('only_own') ? true : false;
             $this->deputies = Request::get('deputies') ? true : false;
+            $this->previous = Request::get('previous') ? true : false;
+            $this->sem_tree = Request::option('sem_tree') ? Request::option('sem_tree') : 'all';
             $this->format = Request::option('format');
         } else {
             $this->sem_select = SemesterData::getInstance()->GetSemesterIdByDate(time());
-//             $this->sem_tree = 'all';
             $this->only_own = !$GLOBALS['perm']->have_perm('admin');
             $this->deputies = false;
+            $this->previous = false;
+            $this->sem_tree = 'all';
             $this->format = 'html_list';
         }
     }
 
-    public function output_action() {
+    private function initSemTree() {
+        // Studienbereiche auslesen
+        $semTree = TreeAbstract::GetInstance("StudipSemTree", array('visible_only' => true));
+        $semTree->init();
+
+        $entries = array();
+        $children = array();
+        foreach ($semTree->getKids('root') as $child) {
+            $entries[$child] = htmlReady($semTree->tree_data[$child]['name']);
+            if ($semTree->hasKids($child)) {
+                $children[$child] = array();
+                foreach ($semTree->getKids($child) as $grandchild) {
+                    $children[$child][$grandchild] = htmlReady($semTree->tree_data[$grandchild]['name']);
+                }
+                asort($children[$child]);
+            }
+        }
+        asort($entries);
+
+        $this->sem_tree_data['entries'] = $entries;
+        $this->sem_tree_data['children'] = $children;
+    }
+
+    public function index_action() {
         $this->saveRequestParams();
+        $this->initSemTree();
 
         $selectedSemester = SemesterData::getInstance()->getSemesterData($this->sem_select);
         // übergib, falls vorhanden, die Semesterbeschreibung, ansonsten den Semesternamen
-        $this->semester = empty($selectedSemester['description']) ? $selectedSemester['name'] : $selectedSemester['description'];
+        $this->semester = $selectedSemester['description'] ? : $selectedSemester['name'];
 
         $exams = new ExamDB();
-        $exams->querySQL($this->sem_select, $this->sem_tree, $this->only_own, $this->deputies);
+        $exams->querySQL($this->sem_select, $this->only_own, $this->deputies, $this->previous, $this->sem_tree);
         $result = $exams->getExams();
 
         if (empty($result)) {
@@ -55,6 +79,8 @@ class ShowController extends AuthenticatedController {
                 break;
 
             case 'html_calendar':
+                PageLayout::addStylesheet($this->dispatcher->plugin->getPluginURL() . '/assets/show/html_calendar.css');
+
                 $this->selected = $exams->getSelectedNum();
                 $this->exams = $exams->getOrderedExams();
                 $this->faculties = $exams->getFaculties();
@@ -79,40 +105,6 @@ class ShowController extends AuthenticatedController {
                 $this->format_error = true;
                 $this->render_action('error');
         }
-    }
-
-    public function settings_action() {
-        $GLOBALS['perm']->check('root');
-
-        $settings = new Settings();
-        $settings->querySQL();
-        $this->faculties = $settings->getFaculties();
-        $this->exam_types = $settings->getExamTypes();
-    }
-
-    public function update_action() {
-        $GLOBALS['perm']->check('root');
-
-        // Fakultäts-IDs und Farbwerte zusammenfassen, ungültige Farbwerte mit 000000 ersetzen
-        $fac_id_array = Request::optionArray('fac_id');
-        $color_array = Request::optionArray('color');
-
-        for ($i = 0; $i < count($fac_id_array); $i++) {
-            $color = preg_match('/[0-9A-Fa-f]{6}/', $color_array[$i]) ? $color_array[$i] : '000000';
-            $faculties[$fac_id_array[$i]] = $color;
-        }
-
-        $this->faculties = $faculties;
-
-        $exam_types = Request::getArray('exam_types');
-
-        $settings = new Settings();
-        $settings->updateSQL($faculties, $exam_types);
-
-        // auf Einstellungsseite umleiten
-        $this->settings_action();
-        $this->update_success = true;
-        $this->render_action('settings');
     }
 
     // customized #url_for for plugins

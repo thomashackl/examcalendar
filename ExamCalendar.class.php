@@ -28,34 +28,25 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
 
         bindtextdomain('examcalendar', __DIR__.'/locale');
 
-        $navigation = Navigation::getItem('/calendar'); // Hauptmenü "Planer"
-        $examcalendar_navi = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
+        $navigation = Navigation::getItem('/calendar');
+        $examcalendar_navi = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/index'));
         $navigation->addSubNavigation('examcalendar', $examcalendar_navi);
     }
 
-    public function initialize () {
-        // do nothing
+    public function initialize() {
+        // nichts zu tun
     }
 
     public function perform($unconsumed_path) {
-        // Einstellungen (und damit komplette Navigation) sieht nur root
+        Sidebar::Get()->setImage('sidebar/schedule-sidebar.png');
+
         if ($GLOBALS['perm']->have_perm('root')) {
             $navigation = Navigation::getItem('/calendar/examcalendar');
-            $navi_output = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/output'));
-            $navigation->addSubNavigation('output', $navi_output);
+            $navi_show = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/index'));
+            $navigation->addSubNavigation('show', $navi_show);
 
-            $navi_settings = new AutoNavigation(dgettext('examcalendar', 'Einstellungen'), PluginEngine::getUrl('examcalendar/show/settings'));
+            $navi_settings = new AutoNavigation(dgettext('examcalendar', 'Einstellungen'), PluginEngine::getUrl('examcalendar/settings/examtypes'));
             $navigation->addSubNavigation('settings', $navi_settings);
-        }
-
-        // Stylesheets
-        PageLayout::addStylesheet($this->getPluginURL() . '/assets/style.css');
-        PageLayout::addStylesheet($this->getPluginURL() . '/assets/calendar.css');
-
-        // JS Color Picker für die Einstellungen
-        if ($GLOBALS['perm']->have_perm('root')) {
-            PageLayout::addScript($this->getPluginURL() . '/vendor/jscolor/jscolor.js');
-            PageLayout::addScript($this->getPluginURL() . '/assets/settings.js');
         }
 
         $this->setupAutoload();

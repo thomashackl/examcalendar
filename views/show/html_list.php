@@ -1,7 +1,6 @@
+<?php PageLayout::setTitle(sprintf(dgettext('examcalendar', 'Prüfungskalender für das %s'), htmlReady($semester))) ?>
+
 <table class="default">
-    <caption>
-        <?= sprintf(dgettext('examcalendar', 'Prüfungskalender für das %s'), htmlReady($semester)) ?>
-    </caption>
     <thead>
         <tr>
             <th>
@@ -50,4 +49,4 @@
 </table>
 
 <?php
-ExamUtil::create_infobox($controller, $sem_select, $only_own, $deputies, $sem_tree, $format, $faculties);
+ExamUtil::create_show_sidebar($controller, $sem_select, $only_own, $deputies, $previous, $sem_tree, $sem_tree_data, $format, $faculties);

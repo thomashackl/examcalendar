@@ -1,7 +1,4 @@
 <?php
-
-require_once('lib/dates.inc.php');
-
 class ExamUtil {
 
     public static function get_display_formats() {
@@ -16,6 +13,27 @@ class ExamUtil {
             'pdf_list'      => 'PDF (' . dgettext('examcalendar', 'Liste') . ')',
             'ical'          => 'iCal'
         );
+    }
+
+    private static function getWeekday($day) {
+        switch($day) {
+            case 0:
+                return dgettext('examcalendar', 'So');
+            case 1:
+                return dgettext('examcalendar', 'Mo');
+            case 2:
+                return dgettext('examcalendar', 'Di');
+            case 3:
+                return dgettext('examcalendar', 'Mi');
+            case 4:
+                return dgettext('examcalendar', 'Do');
+            case 5:
+                return dgettext('examcalendar', 'Fr');
+            case 6:
+                return dgettext('examcalendar', 'Sa');
+            default:
+                return dgettext('examcalendar', 'ungültiger Wochentag');
+        }
     }
 
     public static function getMonth($month) {
@@ -50,25 +68,27 @@ class ExamUtil {
     }
 
     public static function nice_date($timestamp) {
-        return getWeekday(date("w", $timestamp)) . "., " . date("d.m.Y", $timestamp);
+        return self::getWeekday(date("w", $timestamp)) . "., " . date("d.m.Y", $timestamp);
     }
 
     public static function nice_time($timestamp) {
         return date("H:i", $timestamp);
     }
 
-    public static function create_infobox($controller, $sem_select, $only_own, $deputies, $sem_tree, $format, $faculties) {
-        $sidebar = Sidebar::get();
+    public static function create_show_sidebar($controller, $sem_select, $only_own, $deputies, $previous, $sem_tree, $sem_tree_data, $format, $faculties) {
+        $sidebar = Sidebar::Get();
 
         $params = array(
             'sem_select' => $sem_select,
             'only_own' => $only_own,
             'deputies' => $deputies,
+            'previous' => $previous,
+            'sem_tree' => $sem_tree,
             'format' => $format
         );
 
         // Semester-Auswahl
-        $semester_widget = new SelectWidget(dgettext('examcalendar', 'Semester'), $controller->url_for('show/output', $params), 'sem_select');
+        $semester_widget = new SelectWidget(dgettext('examcalendar', 'Semester'), $controller->url_for('show/index', $params), 'sem_select');
         foreach (array_reverse(Semester::getAll()) as $sem) {
             $semester_widget->addElement(new SelectElement($sem->id, $sem->name, $sem->id == $sem_select));
         }
@@ -78,32 +98,51 @@ class ExamUtil {
         $options_widget = new OptionsWidget();
         $options_widget->addCheckbox(
             dgettext('examcalendar', 'nur eigene Veranstaltungen'),
-             $only_own,
-             $controller->url_for('show/output', array_merge($params, array('only_own' => 1))),
-             $controller->url_for('show/output', array_merge($params, array('only_own' => 0)))
+            $only_own,
+            $controller->url_for('show/index', array_merge($params, array('only_own' => 1))),
+            $controller->url_for('show/index', array_merge($params, array('only_own' => 0)))
         );
         if ($GLOBALS['perm']->have_perm('dozent')) {
             $options_widget->addCheckbox(
-                dgettext('examcalendar', 'Dozierendenvertretung'),
+                dgettext('examcalendar', 'ich bin Dozierendenvertretung'),
                 $deputies,
-                $controller->url_for('show/output', array_merge($params, array('deputies' => 1))),
-                $controller->url_for('show/output', array_merge($params, array('deputies' => 0)))
+                $controller->url_for('show/index', array_merge($params, array('deputies' => 1))),
+                $controller->url_for('show/index', array_merge($params, array('deputies' => 0)))
             );
         }
+        $options_widget->addCheckbox(
+            dgettext('examcalendar', 'vergangene Prüfungstermine'),
+            $previous,
+            $controller->url_for('show/index', array_merge($params, array('previous' => 1))),
+            $controller->url_for('show/index', array_merge($params, array('previous' => 0)))
+        );
         $sidebar->addWidget($options_widget);
+
+        // Fakultät oder Studiengang eingrenzen
+        $sem_tree_widget = new SelectWidget(dgettext('examcalendar', 'Eingrenzen'), $controller->url_for('show/index', $params), 'sem_tree');
+        $sem_tree_widget->addElement(new SelectElement('all', '-- ' . dgettext('examcalendar', 'alle') . ' --'), $sem_tree == 'all');
+        foreach ($sem_tree_data['entries'] as $id => $name) {
+            $sem_tree_widget->addElement(new SelectElement($id, $name, $id == $sem_tree));
+            if ($sem_tree_data['children'][$id]) {
+                foreach ($sem_tree_data['children'][$id] as $cid => $cname) {
+                    $sem_tree_widget->addElement(new SelectElement($cid, '- ' . $cname, $cid == $sem_tree));
+                }
+            }
+        }
+//         $sidebar->addWidget($sem_tree_widget, 'sem_tree');
 
         // Ansichten-Auswahl
         $views_widget = new ViewsWidget();
         foreach (ExamUtil::get_display_formats() as $id => $name) {
-            $views_widget->addLink($name, $controller->url_for('show/output', array_merge($params, array('format' => $id))))->setActive($format == $id);
+            $views_widget->addLink($name, $controller->url_for('show/index', array_merge($params, array('format' => $id))))->setActive($format == $id);
         }
         $sidebar->addWidget($views_widget);
 
+        // zeige Export und Legende nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)
         if (!empty($faculties)) {
-            // zeige Export nur an, wenn Prüfungen gefunden wurden (also sind Fakultäten in der Legende)
             $export_widget = new ExportWidget();
             foreach (ExamUtil::get_export_formats() as $id => $name) {
-                $export_widget->addLink($name, $controller->url_for('show/output', array_merge($params, array('format' => $id))), 'icons/16/blue/export/file-text.png');
+                $export_widget->addLink($name, $controller->url_for('show/index', array_merge($params, array('format' => $id))), 'icons/16/blue/export/file-text.png');
             }
             $sidebar->addWidget($export_widget, 'export');
 
@@ -126,6 +165,16 @@ class ExamUtil {
             $faculties_widget->addElement(new WidgetElement($faculty_box));
             $sidebar->addWidget($faculties_widget, 'faculties');
         }
+    }
+
+    public static function create_settings_sidebar($controller, $view) {
+        $sidebar = Sidebar::Get();
+
+        $views_widget = new ViewsWidget();
+        $views_widget->addLink(dgettext('examcalendar', 'Termintypen'), $controller->url_for('settings/examtypes'))->setActive($view == 'examtypes');
+        $views_widget->addLink(dgettext('examcalendar', 'Fakultätsfarben'), $controller->url_for('settings/faculties'))->setActive($view == 'faculties');
+
+        $sidebar->addWidget($views_widget);
     }
 
 }

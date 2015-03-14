@@ -7,4 +7,4 @@
 <?php endif ?>
 
 <?php
-ExamUtil::create_infobox($controller, $sem_select, $only_own, $deputies, $sem_tree, $format, $faculties);
+ExamUtil::create_show_sidebar($controller, $sem_select, $only_own, $deputies, $previous, $sem_tree, $sem_tree_data, $format, $faculties);

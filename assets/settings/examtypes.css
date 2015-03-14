@@ -1,0 +1,4 @@
+/* mittige Ausrichtung der Checkboxen */
+input.checkbox {
+    vertical-align: middle;
+}

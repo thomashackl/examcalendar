@@ -9,7 +9,7 @@ class ExamDB {
     private $faculties_done = false;
     private $faculties = array();
 
-    public function querySQL($semester_id, $studyCourse = 'all', $onlyOwn = false, $deputies = false) {
+    public function querySQL($semester_id, $onlyOwn = false, $deputies = false, $previous = false, $studyCourse = 'all') {
         $this->ordering_done = false;
         $this->faculties_done = false;
 
@@ -52,17 +52,17 @@ class ExamDB {
 
         $inputs = array('semester_id' => $semester_id);
 
-//         if ($studyCourse != 'all') {
-//             $semTree = TreeAbstract::GetInstance("StudipSemTree", array("visible_only" => true));
-//             $semTree->init();
-//             $selectedEntries = $semTree->getKidsKids($studyCourse);
-//             $selectedEntries[] = $studyCourse;
+        if ($studyCourse != 'all') {
+            $semTree = TreeAbstract::GetInstance("StudipSemTree", array("visible_only" => true));
+            $semTree->init();
+            $selectedEntries = $semTree->getKidsKids($studyCourse);
+            $selectedEntries[] = $studyCourse;
 
-//             $from .= " JOIN seminar_sem_tree sst ON (s.Seminar_id = sst.seminar_id)";
-//             $where .= " AND sst.sem_tree_id IN (:selected_entries)";
+            $from .= " JOIN seminar_sem_tree sst ON (s.Seminar_id = sst.seminar_id)";
+            $where .= " AND sst.sem_tree_id IN (:selected_entries)";
 
-//             $inputs['selected_entries'] = $selectedEntries;
-//         }
+            $inputs['selected_entries'] = $selectedEntries;
+        }
 
         if ($onlyOwn) {
             $from .= " JOIN seminar_user su ON su.Seminar_id = s.Seminar_id";
@@ -78,11 +78,17 @@ class ExamDB {
             $inputs['user_id'] = $GLOBALS['user']->id;
         }
 
+        if (!$previous) {
+            $where .= " AND t.end_time > :now";
+
+            $inputs['now'] = time();
+        }
+
         $preparation = $db->prepare($select . $from . $where . $order, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $preparation->execute($inputs);
 
         $result = $preparation->fetchAll();
-        $this->exams = $result ? : array(); // TODO ternary nötig?
+        $this->exams = $result ? : array();
     }
 
     public function getSelectedNum() {

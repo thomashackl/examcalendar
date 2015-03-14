@@ -1,8 +1,3 @@
-/* mittige Ausrichtung der Checkboxen */
-input.checkbox {
-    vertical-align: middle;
-}
-
 /* Breite der Farbspalte in der Listenausgabe und der Legende */
 table td.colorbox_info {
     width: 12pt;
