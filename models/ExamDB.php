@@ -9,7 +9,7 @@ class ExamDB {
     private $faculties_done = false;
     private $faculties = array();
 
-    public function querySQL($semester_id, $onlyOwn = false, $deputies = false, $previous = false, $studyCourse = 'all') {
+    public function querySQL($semester_id, $onlyOwn = false, $deputies = false, $previous = false, $faculty = 'all') {
         $this->ordering_done = false;
         $this->faculties_done = false;
 
@@ -53,16 +53,10 @@ class ExamDB {
 
         $inputs = array('semester_id' => $semester_id);
 
-        if ($studyCourse != 'all') {
-            $semTree = TreeAbstract::GetInstance("StudipSemTree", array("visible_only" => true));
-            $semTree->init();
-            $selectedEntries = $semTree->getKidsKids($studyCourse);
-            $selectedEntries[] = $studyCourse;
+        if ($faculty != 'all') {
+            $where .= " AND i.fakultaets_id = :faculty";
 
-            $from .= " JOIN seminar_sem_tree sst ON (s.Seminar_id = sst.seminar_id)";
-            $where .= " AND sst.sem_tree_id IN (:selected_entries)";
-
-            $inputs['selected_entries'] = $selectedEntries;
+            $inputs['faculty'] = $faculty;
         }
 
         if ($onlyOwn) {

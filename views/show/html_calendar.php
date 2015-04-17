@@ -138,4 +138,4 @@
 <?php endforeach ?>
 
 <?php
-ExamUtil::create_show_sidebar($controller, $sem_select, $only_own, $deputies, $previous, $sem_tree, $sem_tree_data, $format, $faculties);
+ExamUtil::create_show_sidebar($controller, $sem_select, $only_own, $deputies, $previous, $filter, $filters, $format, $faculties);

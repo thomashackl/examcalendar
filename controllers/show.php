@@ -15,51 +15,28 @@ class ShowController extends AuthenticatedController {
             $this->only_own = Request::get('only_own') ? true : false;
             $this->deputies = Request::get('deputies') ? true : false;
             $this->previous = Request::get('previous') ? true : false;
-            $this->sem_tree = Request::option('sem_tree') ? Request::option('sem_tree') : 'all';
+            $this->filter = Request::option('filter') ? Request::option('filter') : 'all';
             $this->format = Request::option('format');
         } else {
             $this->sem_select = SemesterData::getInstance()->GetSemesterIdByDate(time());
             $this->only_own = !$GLOBALS['perm']->have_perm('admin');
             $this->deputies = false;
             $this->previous = false;
-            $this->sem_tree = 'all';
+            $this->filter = 'all';
             $this->format = 'html_list';
         }
     }
 
-    private function initSemTree() {
-        // Studienbereiche auslesen
-        $semTree = TreeAbstract::GetInstance("StudipSemTree", array('visible_only' => true));
-        $semTree->init();
-
-        $entries = array();
-        $children = array();
-        foreach ($semTree->getKids('root') as $child) {
-            $entries[$child] = htmlReady($semTree->tree_data[$child]['name']);
-            if ($semTree->hasKids($child)) {
-                $children[$child] = array();
-                foreach ($semTree->getKids($child) as $grandchild) {
-                    $children[$child][$grandchild] = htmlReady($semTree->tree_data[$grandchild]['name']);
-                }
-                asort($children[$child]);
-            }
-        }
-        asort($entries);
-
-        $this->sem_tree_data['entries'] = $entries;
-        $this->sem_tree_data['children'] = $children;
-    }
-
     public function index_action() {
         $this->saveRequestParams();
-        $this->initSemTree();
+        $this->filters = Settings::getFaculties();
 
         $selectedSemester = SemesterData::getInstance()->getSemesterData($this->sem_select);
         // übergib, falls vorhanden, die Semesterbeschreibung, ansonsten den Semesternamen
         $this->semester = $selectedSemester['description'] ? : $selectedSemester['name'];
 
         $exams = new ExamDB();
-        $exams->querySQL($this->sem_select, $this->only_own, $this->deputies, $this->previous, $this->sem_tree);
+        $exams->querySQL($this->sem_select, $this->only_own, $this->deputies, $this->previous, $this->filter);
         $result = $exams->getExams();
 
         if (empty($result)) {

@@ -75,7 +75,7 @@ class ExamUtil {
         return date("H:i", $timestamp);
     }
 
-    public static function create_show_sidebar($controller, $sem_select, $only_own, $deputies, $previous, $sem_tree, $sem_tree_data, $format, $faculties) {
+    public static function create_show_sidebar($controller, $sem_select, $only_own, $deputies, $previous, $filter, $filters, $format, $faculties) {
         $sidebar = Sidebar::Get();
 
         $params = array(
@@ -83,7 +83,7 @@ class ExamUtil {
             'only_own' => $only_own,
             'deputies' => $deputies,
             'previous' => $previous,
-            'sem_tree' => $sem_tree,
+            'filter' => $filter,
             'format' => $format
         );
 
@@ -118,18 +118,13 @@ class ExamUtil {
         );
         $sidebar->addWidget($options_widget);
 
-        // Fakultät oder Studiengang eingrenzen
-        $sem_tree_widget = new SelectWidget(dgettext('examcalendar', 'Eingrenzen'), $controller->url_for('show/index', $params), 'sem_tree');
-        $sem_tree_widget->addElement(new SelectElement('all', '-- ' . dgettext('examcalendar', 'alle') . ' --'), $sem_tree == 'all');
-        foreach ($sem_tree_data['entries'] as $id => $name) {
-            $sem_tree_widget->addElement(new SelectElement($id, $name, $id == $sem_tree));
-            if ($sem_tree_data['children'][$id]) {
-                foreach ($sem_tree_data['children'][$id] as $cid => $cname) {
-                    $sem_tree_widget->addElement(new SelectElement($cid, '- ' . $cname, $cid == $sem_tree));
-                }
-            }
+        // Fakultät eingrenzen
+        $filter_widget = new SelectWidget(dgettext('examcalendar', 'Fakultät eingrenzen'), $controller->url_for('show/index', $params), 'filter');
+        $filter_widget->addElement(new SelectElement('all', dgettext('examcalendar', 'alle Fakultäten'), $filter == 'all'));
+        foreach ($filters as $f) {
+            $filter_widget->addElement(new SelectElement($f['fac_id'], $f['faculty'], $f['fac_id'] == $filter));
         }
-//         $sidebar->addWidget($sem_tree_widget, 'sem_tree');
+        $sidebar->addWidget($filter_widget, 'filter');
 
         // Ansichten-Auswahl
         $views_widget = new ViewsWidget();
