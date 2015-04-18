@@ -28,7 +28,7 @@
                 <td class="colorbox_exams" style="background: #<?= $faculties[$exam['fac_id']]['color'] ?>">
 
                 </td>
-                <td>
+                <td style="white-space: nowrap">
                     <?= ExamUtil::nice_date($exam['begin']) ?><br />
                     <?= ExamUtil::nice_time($exam['begin']) ?> - <?= ExamUtil::nice_time($exam['end']) ?>
                 </td>
