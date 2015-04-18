@@ -66,7 +66,7 @@ class ExamDB {
             $inputs['user_id'] = $GLOBALS['user']->id;
         }
 
-        if ($deputies) {
+        if (Config::get()->DEPUTIES_ENABLE && $deputies) {
             $from .= " JOIN deputies d ON d.range_id = s.Seminar_id";
             $where .= " AND d.user_id = :user_id";
 

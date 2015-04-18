@@ -102,7 +102,7 @@ class ExamUtil {
             $controller->url_for('show/index', array_merge($params, array('only_own' => 1))),
             $controller->url_for('show/index', array_merge($params, array('only_own' => 0)))
         );
-        if ($GLOBALS['perm']->have_perm('dozent')) {
+        if (Config::get()->DEPUTIES_ENABLE && $GLOBALS['perm']->have_perm('dozent')) {
             $options_widget->addCheckbox(
                 dgettext('examcalendar', 'ich bin Dozierendenvertretung'),
                 $deputies,
