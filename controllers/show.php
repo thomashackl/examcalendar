@@ -4,7 +4,6 @@ class ShowController extends AuthenticatedController {
 
     public function before_filter(&$action, &$args) {
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
-        $this->set_content_type('text/html; charset=windows-1252');
 
         PageLayout::addStylesheet($this->dispatcher->plugin->getPluginURL() . '/assets/show/style.css');
     }

@@ -6,7 +6,6 @@ class SettingsController extends AuthenticatedController {
         $GLOBALS['perm']->check('root');
 
         $this->set_layout($GLOBALS['template_factory']->open('layouts/base'));
-        $this->set_content_type('text/html; charset=windows-1252');
 
         Navigation::activateItem('/calendar/examcalendar/settings');
     }
