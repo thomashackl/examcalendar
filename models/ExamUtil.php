@@ -137,7 +137,14 @@ class ExamUtil {
         if (!empty($faculties)) {
             $export_widget = new ExportWidget();
             foreach (ExamUtil::get_export_formats() as $id => $name) {
-                $export_widget->addLink($name, $controller->url_for('show/index', array_merge($params, array('format' => $id))), 'icons/16/blue/export/file-text.png');
+                if (strpos($id, 'pdf') !== false) {
+                    $icon = 'file-pdf';
+                } else if (strpos($id, 'ical') !== false) {
+                    $icon = 'timetable';
+                } else {
+                    $icon = 'file-text';
+                }
+                $export_widget->addLink($name, $controller->url_for('show/index', array_merge($params, array('format' => $id))), Icon::create($icon, 'clickable'));
             }
             $sidebar->addWidget($export_widget, 'export');
 
