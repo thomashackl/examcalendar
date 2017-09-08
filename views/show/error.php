@@ -1,9 +1,9 @@
 <?php if ($format_error): ?>
-    <?= MessageBox::error(dgettext('examcalendar', 'Das ausgewählte Ausgabeformat ist ungültig.')) ?>
+    <?= MessageBox::error(dgettext('examcalendar', 'Das ausgewÃ¤hlte Ausgabeformat ist ungÃ¼ltig.')) ?>
 <?php endif ?>
 
 <?php if ($no_results): ?>
-    <?= MessageBox::info(sprintf(dgettext('examcalendar', 'Es wurden keine Prüfungen im %s gefunden, die den ausgewählten Kriterien entsprechen!'), htmlReady($semester))) ?>
+    <?= MessageBox::info(sprintf(dgettext('examcalendar', 'Es wurden keine PrÃ¼fungen im %s gefunden, die den ausgewÃ¤hlten Kriterien entsprechen!'), htmlReady($semester))) ?>
 <?php endif ?>
 
 <?php

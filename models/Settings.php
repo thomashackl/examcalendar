@@ -27,7 +27,7 @@ class Settings {
     public static function getExamTypes() {
         $db = DBManager::get();
 
-        // Termintypen für den Prüfungskalender abrufen
+        // Termintypen fÃ¼r den PrÃ¼fungskalender abrufen
         $select = "SELECT value";
         $from  = " FROM exam_calendar_settings";
         $where = " WHERE setting = 'exam_types'";
@@ -42,7 +42,7 @@ class Settings {
     public static function getFaculties() {
         $db = DBManager::get();
 
-        // Fakultäten und eingetragene Farben abrufen
+        // FakultÃ¤ten und eingetragene Farben abrufen
         $select = "SELECT DISTINCT f.Institut_id as fac_id, f.Name as faculty, c.color";
         $from  = " FROM Institute i
                    JOIN Institute f ON (i.fakultaets_id = f.Institut_id)
@@ -58,7 +58,7 @@ class Settings {
     public function updateExamTypes($exam_types) {
         $db = DBManager::get();
 
-        // Termintypen für den Prüfungskalender updaten
+        // Termintypen fÃ¼r den PrÃ¼fungskalender updaten
         $exam_values = self::bin_encode($exam_types);
 
         $update = "UPDATE exam_calendar_settings";
@@ -72,7 +72,7 @@ class Settings {
     public static function updateFaculties($faculties) {
         $db = DBManager::get();
 
-        // Fakultäten und eingetragene Farben updaten
+        // FakultÃ¤ten und eingetragene Farben updaten
         foreach ($faculties as $fac_id => $color) {
             $insert  = "REPLACE INTO exam_calendar_faculty_colors (fakultaets_id, color)";
             $values = " VALUES (:id, '" . $color . "')";

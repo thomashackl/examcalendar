@@ -22,4 +22,4 @@
 ExamUtil::create_settings_sidebar($controller, 'examtypes');
 
 $helpbar = Helpbar::Get();
-$helpbar->addPlainText('', dgettext('examcalendar', 'W‰hlen Sie hier die Termintypen aus, die bei der Erstellung eines Pr¸fungskalenders ber¸cksichtigt werden sollen.'));
+$helpbar->addPlainText('', dgettext('examcalendar', 'W√§hlen Sie hier die Termintypen aus, die bei der Erstellung eines Pr√ºfungskalenders ber√ºcksichtigt werden sollen.'));

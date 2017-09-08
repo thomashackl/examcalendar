@@ -4,14 +4,14 @@ class ExamExport {
 
     public static function exportPDFlist($semester, $selected, $exams, $faculties) {
         $export = new ExportDoc();
-        $export->setTitle(dgettext('examcalendar', 'Prüfungskalender'));
+        $export->setTitle(dgettext('examcalendar', 'PrÃ¼fungskalender'));
         $export->setSubtitle($semester);
-        $export->setFilename(dgettext('examcalendar', 'Prüfungskalender') . ' ' . $semester);
+        $export->setFilename(dgettext('examcalendar', 'PrÃ¼fungskalender') . ' ' . $semester);
 
-        // TODO Fakultäten
-        // Tabelle: Farbe | Fakultät
+        // TODO FakultÃ¤ten
+        // Tabelle: Farbe | FakultÃ¤t
 
-        // Prüfungstabelle
+        // PrÃ¼fungstabelle
         $ex_table = $export->add('table');
 
         $ex_table_header = array();

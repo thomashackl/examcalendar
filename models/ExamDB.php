@@ -15,7 +15,7 @@ class ExamDB {
 
         $db = DBManager::get();
 
-        // alle Termin-Typen, die im Prüfungskalender ausgewertet werden sollen
+        // alle Termin-Typen, die im PrÃ¼fungskalender ausgewertet werden sollen
         $select = "SELECT value";
         $from  = " FROM exam_calendar_settings";
         $where = " WHERE setting = 'exam_types'";
@@ -28,7 +28,7 @@ class ExamDB {
 
         $this->selected = count($exam_types);
 
-        // Prüfungen abfragen, die den gewählten Einstellungen entsprechen
+        // PrÃ¼fungen abfragen, die den gewÃ¤hlten Einstellungen entsprechen
         $select = "SELECT DISTINCT i.fakultaets_id AS fac_id,
                                    s.Seminar_id AS sem_id,
                                    s.VeranstaltungsNummer AS num,
@@ -97,7 +97,7 @@ class ExamDB {
     public function getOrderedExams() {
         if (!$this->ordering_done) {
             if (!empty($this->exams)) {
-                // Prüfungen nach Jahr, Monat und Tag sortieren
+                // PrÃ¼fungen nach Jahr, Monat und Tag sortieren
                 foreach ($this->exams as $exam) {
                     $year  = date("Y", $exam['begin']);
                     $month = date("n", $exam['begin']);
@@ -115,7 +115,7 @@ class ExamDB {
 
     public function getFaculties() {
         if (!$this->faculties_done) {
-            // welche Fakultäten kommen vor?
+            // welche FakultÃ¤ten kommen vor?
             if (!empty($this->exams)) {
                 $db = DBManager::get();
 

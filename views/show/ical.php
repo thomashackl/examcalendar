@@ -9,12 +9,12 @@ $now = time();
 foreach ($exams as $exam) {
     $title = $exam['title'];
 
-    // Veranstaltungsnummer hinzufügen, falls vorhanden
+    // Veranstaltungsnummer hinzufÃ¼gen, falls vorhanden
     if ($exam['num']) {
         $title = $exam['num'] . ' ' . $title;
     }
 
-    // Termin-Typ hinzufügen, falls mehr als 1 Typ eine Prüfung darstellt
+    // Termin-Typ hinzufÃ¼gen, falls mehr als 1 Typ eine PrÃ¼fung darstellt
     if ($selected > 1) {
         $title = $GLOBALS['TERMIN_TYP'][$exam['type']]['name'] . ': ' . $title;
     }

@@ -1,4 +1,4 @@
-<?php PageLayout::setTitle(sprintf(dgettext('examcalendar', 'Prüfungskalender für das %s'), htmlReady($semester))) ?>
+<?php PageLayout::setTitle(sprintf(dgettext('examcalendar', 'PrÃ¼fungskalender fÃ¼r das %s'), htmlReady($semester))) ?>
 
 <?php foreach ($exams as $year => $exams): ?>
     <?php foreach ($exams as $month => $exams): ?>

@@ -28,7 +28,7 @@ class SettingsController extends AuthenticatedController {
 
     public function faculties_action() {
         if (Request::submitted('save')) {
-            // Fakultäts-IDs und Farbwerte zusammenfassen, ungültige Farbwerte mit 000000 ersetzen
+            // FakultÃ¤ts-IDs und Farbwerte zusammenfassen, ungÃ¼ltige Farbwerte mit 000000 ersetzen
             $fac_id_array = Request::optionArray('fac_id');
             $color_array = Request::optionArray('color');
 

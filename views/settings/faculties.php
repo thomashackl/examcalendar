@@ -6,7 +6,7 @@
     <table class="default">
         <tr>
             <th>
-                <?= dgettext('examcalendar', 'Fakultät') ?>
+                <?= dgettext('examcalendar', 'FakultÃ¤t') ?>
             </th>
             <th>
                 <?= dgettext('examcalendar', 'Farbe') ?>
@@ -26,7 +26,7 @@
     </table>
 
     <?= Studip\Button::createAccept(dgettext('examcalendar', 'speichern'), 'save') ?>
-    <button type="reset" class="cancel button" name="resetButton" id="resetButton"><?= dgettext('examcalendar', 'zurücksetzen') ?></button>
+    <button type="reset" class="cancel button" name="resetButton" id="resetButton"><?= dgettext('examcalendar', 'zurÃ¼cksetzen') ?></button>
 </form>
 
 <?php
@@ -34,8 +34,8 @@ ExamUtil::create_settings_sidebar($controller, 'faculties');
 
 $helpbar = Helpbar::Get();
 $helpbar->addPlainText('', array(
-    dgettext('examcalendar', 'Die Farben, die Sie den Fakultäten zuordnen, werden in den Listen- und Kalenderausgaben verwendet, um darzustellen, welche Prüfungen zu welchen Fakultäten gehören.'),
-    dgettext('examcalendar', 'Jede Ausgabe enthält eine Legende, die die Farbzuordnung der Fakultäten enthält.'),
-    dgettext('examcalendar', 'Farbwerte werden Hexadezimal angegeben, ohne das führende Raute-Zeichen.'),
-    dgettext('examcalendar', 'Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur Verfügung.')
+    dgettext('examcalendar', 'Die Farben, die Sie den FakultÃ¤ten zuordnen, werden in den Listen- und Kalenderausgaben verwendet, um darzustellen, welche PrÃ¼fungen zu welchen FakultÃ¤ten gehÃ¶ren.'),
+    dgettext('examcalendar', 'Jede Ausgabe enthÃ¤lt eine Legende, die die Farbzuordnung der FakultÃ¤ten enthÃ¤lt.'),
+    dgettext('examcalendar', 'Farbwerte werden Hexadezimal angegeben, ohne das fÃ¼hrende Raute-Zeichen.'),
+    dgettext('examcalendar', 'Wenn JavaScript aktiviert ist, steht ein Farbauswahl-Popup zur VerfÃ¼gung.')
 ));

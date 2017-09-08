@@ -32,7 +32,7 @@ class ShowController extends AuthenticatedController {
         $this->filters = Settings::getFaculties();
 
         $selectedSemester = SemesterData::getInstance()->getSemesterData($this->sem_select);
-        // übergib, falls vorhanden, die Semesterbeschreibung, ansonsten den Semesternamen
+        // Ã¼bergib, falls vorhanden, die Semesterbeschreibung, ansonsten den Semesternamen
         $this->semester = $selectedSemester['description'] ? : $selectedSemester['name'];
 
         $exams = new ExamDB();

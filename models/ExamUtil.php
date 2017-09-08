@@ -32,7 +32,7 @@ class ExamUtil {
             case 6:
                 return dgettext('examcalendar', 'Sa');
             default:
-                return dgettext('examcalendar', 'ung¸ltiger Wochentag');
+                return dgettext('examcalendar', 'ung√ºltiger Wochentag');
         }
     }
 
@@ -43,7 +43,7 @@ class ExamUtil {
             case 2:
                 return dgettext('examcalendar', 'Februar');
             case 3:
-                return dgettext('examcalendar', 'M‰rz');
+                return dgettext('examcalendar', 'M√§rz');
             case 4:
                 return dgettext('examcalendar', 'April');
             case 5:
@@ -63,7 +63,7 @@ class ExamUtil {
             case 12:
                 return dgettext('examcalendar', 'Dezember');
             default:
-                return dgettext('examcalendar', 'ung¸ltiger Monat');
+                return dgettext('examcalendar', 'ung√ºltiger Monat');
         }
     }
 
@@ -111,16 +111,16 @@ class ExamUtil {
             );
         }
         $options_widget->addCheckbox(
-            dgettext('examcalendar', 'vergangene Pr¸fungstermine'),
+            dgettext('examcalendar', 'vergangene Pr√ºfungstermine'),
             $previous,
             $controller->url_for('show/index', array_merge($params, array('previous' => 1))),
             $controller->url_for('show/index', array_merge($params, array('previous' => 0)))
         );
         $sidebar->addWidget($options_widget);
 
-        // Fakult‰t eingrenzen
-        $filter_widget = new SelectWidget(dgettext('examcalendar', 'Fakult‰t eingrenzen'), $controller->url_for('show/index', $params), 'filter');
-        $filter_widget->addElement(new SelectElement('all', dgettext('examcalendar', 'alle Fakult‰ten'), $filter == 'all'));
+        // Fakult√§t eingrenzen
+        $filter_widget = new SelectWidget(dgettext('examcalendar', 'Fakult√§t eingrenzen'), $controller->url_for('show/index', $params), 'filter');
+        $filter_widget->addElement(new SelectElement('all', dgettext('examcalendar', 'alle Fakult√§ten'), $filter == 'all'));
         foreach ($filters as $f) {
             $filter_widget->addElement(new SelectElement($f['fac_id'], $f['faculty'], $f['fac_id'] == $filter));
         }
@@ -133,7 +133,7 @@ class ExamUtil {
         }
         $sidebar->addWidget($views_widget);
 
-        // zeige Export und Legende nur an, wenn Pr¸fungen gefunden wurden (also sind Fakult‰ten in der Legende)
+        // zeige Export und Legende nur an, wenn Pr√ºfungen gefunden wurden (also sind Fakult√§ten in der Legende)
         if (!empty($faculties)) {
             $export_widget = new ExportWidget();
             foreach (ExamUtil::get_export_formats() as $id => $name) {
@@ -141,9 +141,9 @@ class ExamUtil {
             }
             $sidebar->addWidget($export_widget, 'export');
 
-            // Fakult‰ten-Legende
+            // Fakult√§ten-Legende
             $faculties_widget = new SidebarWidget();
-            $faculties_widget->setTitle(dgettext('examcalendar', 'Fakult‰ten'));
+            $faculties_widget->setTitle(dgettext('examcalendar', 'Fakult√§ten'));
 
             $faculty_box = '<table>';
             if (!empty($faculties)) foreach($faculties as $f) {
@@ -167,7 +167,7 @@ class ExamUtil {
 
         $views_widget = new ViewsWidget();
         $views_widget->addLink(dgettext('examcalendar', 'Termintypen'), $controller->url_for('settings/examtypes'))->setActive($view == 'examtypes');
-        $views_widget->addLink(dgettext('examcalendar', 'Fakult‰tsfarben'), $controller->url_for('settings/faculties'))->setActive($view == 'faculties');
+        $views_widget->addLink(dgettext('examcalendar', 'Fakult√§tsfarben'), $controller->url_for('settings/faculties'))->setActive($view == 'faculties');
 
         $sidebar->addWidget($views_widget);
     }

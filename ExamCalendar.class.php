@@ -4,12 +4,12 @@ require 'bootstrap.php';
 /**
  * ExamCalendar.class.php
  *
- * Erstellt eine Auflistung aller Prüfungen eines Semesters, wahlweise nur von
- * eigenen Veranstaltungen, bzw. bestimmten Fakultäten oder Studiengängen, und
- * gibt diese in verschiedenen Formaten aus. Mögliche Formate sind derzeit HTML
+ * Erstellt eine Auflistung aller PrÃ¼fungen eines Semesters, wahlweise nur von
+ * eigenen Veranstaltungen, bzw. bestimmten FakultÃ¤ten oder StudiengÃ¤ngen, und
+ * gibt diese in verschiedenen Formaten aus. MÃ¶gliche Formate sind derzeit HTML
  * und PDF, jeweils als Liste oder Kalender, und iCal.
  *
- * Dieses Plugin basiert auf dem Prüfungskalender-Plugin für StudIP 1.3 von
+ * Dieses Plugin basiert auf dem PrÃ¼fungskalender-Plugin fÃ¼r StudIP 1.3 von
  * Thomas Hackl <thomas.hackl@uni-passau.de>.
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -29,7 +29,7 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
         bindtextdomain('examcalendar', __DIR__.'/locale');
 
         $navigation = Navigation::getItem('/calendar');
-        $examcalendar_navi = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/index'));
+        $examcalendar_navi = new AutoNavigation(dgettext('examcalendar', 'PrÃ¼fungskalender'), PluginEngine::getUrl('examcalendar/show/index'));
         $navigation->addSubNavigation('examcalendar', $examcalendar_navi);
     }
 
@@ -42,7 +42,7 @@ class ExamCalendar extends StudIPPlugin implements SystemPlugin {
 
         if ($GLOBALS['perm']->have_perm('root')) {
             $navigation = Navigation::getItem('/calendar/examcalendar');
-            $navi_show = new AutoNavigation(dgettext('examcalendar', 'Prüfungskalender'), PluginEngine::getUrl('examcalendar/show/index'));
+            $navi_show = new AutoNavigation(dgettext('examcalendar', 'PrÃ¼fungskalender'), PluginEngine::getUrl('examcalendar/show/index'));
             $navigation->addSubNavigation('show', $navi_show);
 
             $navi_settings = new AutoNavigation(dgettext('examcalendar', 'Einstellungen'), PluginEngine::getUrl('examcalendar/settings/examtypes'));
