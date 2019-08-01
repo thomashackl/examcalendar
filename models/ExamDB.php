@@ -82,7 +82,60 @@ class ExamDB {
         $preparation = $db->prepare($select . $from . $where . $order, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         $preparation->execute($inputs);
 
-        $result = $preparation->fetchAll();
+        $resultBySeminarDate = $preparation->fetchAll();
+
+        // Prüfung, ob Termine von Veranstaltungen anderer Semester in das jeweilige Semester fallen
+
+        $from = " FROM termine t
+                  JOIN seminare s ON (t.range_id = s.Seminar_id)
+                  JOIN semester_data sd ON (t.date BETWEEN sd.beginn AND sd.ende)
+                  JOIN Institute i ON (s.Institut_id = i.Institut_id)
+                  LEFT JOIN resources_assign ra ON (t.termin_id = ra.assign_user_id)
+                  LEFT JOIN resources_objects ro ON (ra.resource_id = ro.resource_id)";
+
+        $where = " WHERE t.date_typ IN ('" . implode("', '", $exam_types) . "')
+                     AND sd.semester_id = :semester_id";
+
+        $order = " ORDER BY begin ASC, end ASC, num ASC, room ASC";
+
+        $inputs = array('semester_id' => $semester_id);
+
+        if ($faculty != 'all') {
+            $where .= " AND i.fakultaets_id = :faculty";
+
+            $inputs['faculty'] = $faculty;
+        }
+
+        if ($onlyOwn) {
+            $from .= " JOIN seminar_user su ON su.Seminar_id = s.Seminar_id";
+            $where .= " AND su.user_id = :user_id";
+
+            $inputs['user_id'] = $GLOBALS['user']->id;
+        }
+
+        if (Config::get()->DEPUTIES_ENABLE && $deputies) {
+            $from .= " JOIN deputies d ON d.range_id = s.Seminar_id";
+            $where .= " AND d.user_id = :user_id";
+
+            $inputs['user_id'] = $GLOBALS['user']->id;
+        }
+
+        if (!$previous) {
+            $where .= " AND t.end_time > :now";
+
+            $inputs['now'] = time();
+        }
+
+        $preparation = $db->prepare($select . $from . $where . $order, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+        $preparation->execute($inputs);
+
+        $resultByExamDate = $preparation->fetchAll();
+
+        $result = array_map("unserialize", array_unique(array_map("serialize", array_merge($resultBySeminarDate, $resultByExamDate)))) ? : array();
+        usort($result, function($a, $b){
+            return $a['begin'] <=> $b['begin'];
+        });
+
         $this->exams = $result ? : array();
     }
 
